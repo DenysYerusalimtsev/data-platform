@@ -11,11 +11,19 @@ ext {
     scalaVersion = '2.12.13'
     scalaCompatVersion = '2.12'
     sparkVersion = '3.1.0'
+    flinkVersion = '1.12.1'
+    flinkCompatVersion = '1.12'
 
     spark = [
             core: "org.apache.spark:spark-core_${scalaCompatVersion}:${sparkVersion}",
             sql: "org.apache.spark:spark-sql_${scalaCompatVersion}:${sparkVersion}",
             kafka: "org.apache.spark:spark-sql-kafka-0-10_${scalaCompatVersion}:${sparkVersion}",
+    ]
+    flink = [
+            core: "org.apache.flink:flink-core:${flinkVersion}",
+            streaming: "org.apache.flink:flink-streaming-scala_${scalaCompatVersion}:${flinkVersion}",
+            scala: "org.apache.flink:flink-scala_${scalaCompatVersion}:${flinkVersion}",
+            twitter: "org.apache.flink:flink-connector-twitter_${scalaCompatVersion}:${flinkVersion}"
     ]
 }
 
@@ -29,7 +37,10 @@ allprojects {
 
     dependencies {
         implementation(
-                "org.scala-lang:scala-library:${scalaVersion}"
+                "org.scala-lang:scala-library:${scalaVersion}",
+                "com.typesafe.scala-logging:scala-logging_${scalaCompatVersion}:3.9.2",
+                "com.github.scopt:scopt_${scalaCompatVersion}:4.0.0",
+                "org.yaml:snakeyaml:1.27"
         )
 
         testImplementation(

@@ -1,3 +1,11 @@
-group 'org.example'
+group 'com.prism.dataplatform.flink'
 version '1.0-SNAPSHOT'
 
+dependencies {
+    implementation(
+            flink.core,
+            flink.streaming,
+            flink.scala,
+            project(":core")
+    )
+}

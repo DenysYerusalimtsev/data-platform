@@ -1,3 +1,11 @@
 group 'org.example'
 version '1.0-SNAPSHOT'
 
+dependencies {
+    implementation(
+            spark.core,
+            spark.sql,
+            project(":spark"),
+            project(":core")
+    )
+}
