@@ -6,6 +6,7 @@ dependencies {
             flink.core,
             flink.streaming,
             flink.scala,
+            flink.twitter,
             project(":core")
     )
 }
