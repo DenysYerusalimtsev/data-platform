@@ -1,5 +1,8 @@
 package com.prism.dataplatform.flink
 
+import com.prism.dataplatform.core.Executor
+import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
+
 trait Flink extends Executor[FlinkJob[_]] {
   protected val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
 
@@ -13,4 +16,3 @@ trait Flink extends Executor[FlinkJob[_]] {
 object Flink {
   def apply(): Flink = new Flink {}
 }
-© 2021 GitHub, Inc.

@@ -11,7 +11,7 @@ ext {
     scalaVersion = '2.12.13'
     scalaCompatVersion = '2.12'
     sparkVersion = '3.1.0'
-    flinkVersion = '1.12.1'
+    flinkVersion = '1.12.2'
     flinkCompatVersion = '1.12'
 
     spark = [
@@ -45,7 +45,9 @@ allprojects {
 
         testImplementation(
                 "org.mockito:mockito-scala_${scalaCompatVersion}:1.16.25",
-                "com.holdenkarau:spark-testing-base_${scalaCompatVersion}:3.0.1_1.0.0"
+                "com.holdenkarau:spark-testing-base_${scalaCompatVersion}:3.0.1_1.0.0",
+                "org.apache.flink:flink-test-utils_${scalaCompatVersion}:1.12.2",
+                "org.apache.flink:flink-runtime_2.11:1.12.2"
         )
 
         testImplementation("org.scalatest:scalatest_${scalaCompatVersion}:3.0.1") {

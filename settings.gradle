@@ -1,6 +1,6 @@
 rootProject.name = 'data-platform'
 include 'core'
-include 'core'
 include 'spark'
 include 'flink'
+include 'twitter'
 
