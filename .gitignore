@@ -4,12 +4,14 @@
 *.ipr
 *.iws
 .idea
-out
+/bin/
+/project/
+*/target/
+*/out/
 .cache/
 .history/
 .lib/
 dist/*
-target/
 bin/
 libexec/
 lib_managed/
