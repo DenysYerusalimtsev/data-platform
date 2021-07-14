@@ -3,7 +3,7 @@ version '1.0.0'
 
 dependencies {
     implementation(
-            flink.core,
+            flink.clients,
             flink.streaming,
             flink.scala,
             flink.twitter,

@@ -5,8 +5,8 @@ import org.apache.flink.api.common.typeinfo.TypeInformation
 
 import java.util.Properties
 
-trait TwitterSourceProperties {
-  implicit val evidence = TypeInformation.of(classOf[(String)])
+trait TwitterProperties {
+  implicit val evidence = TypeInformation.of(classOf[String])
 
   def setupProperties(config: TwitterConfig): Properties = {
     val properties = new Properties

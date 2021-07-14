@@ -26,7 +26,7 @@ ext {
             kafka: "org.apache.spark:spark-sql-kafka-0-10_${scalaCompatVersion}:${sparkVersion}",
     ]
     flink = [
-            core     : "org.apache.flink:flink-core:${flinkVersion}",
+            clients: "org.apache.flink:flink-clients_${scalaCompatVersion}:${flinkVersion}",
             streaming: "org.apache.flink:flink-streaming-scala_${scalaCompatVersion}:${flinkVersion}",
             scala    : "org.apache.flink:flink-scala_${scalaCompatVersion}:${flinkVersion}",
             twitter  : "org.apache.flink:flink-connector-twitter_${scalaCompatVersion}:${flinkVersion}"
