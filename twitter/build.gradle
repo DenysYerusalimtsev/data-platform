@@ -6,6 +6,8 @@ dependencies {
             project(":core"),
             project(":flink"),
             flink.twitter,
-            flink.streaming
+            flink.streaming,
+            http.client,
+            http.dsl
     )
 }
