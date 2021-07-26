@@ -8,6 +8,9 @@ dependencies {
             flink.twitter,
             flink.streaming,
             http.client,
-            http.dsl
+            http.dsl,
+            http.blazeClient,
+            http.http4sCirce,
+            circe
     )
 }

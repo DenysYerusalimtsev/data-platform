@@ -33,9 +33,12 @@ ext {
     ]
     gson = "com.google.code.gson:gson:2.8.5"
     http = [
-            client: "org.http4s:http4s-client_${scalaCompatVersion}:1.0.0-M23",
-            dsl   : "org.http4s:http4s-dsl_${scalaCompatVersion}:1.0.0-M23"
+            client     : "org.http4s:http4s-client_${scalaCompatVersion}:1.0.0-M23",
+            dsl        : "org.http4s:http4s-dsl_${scalaCompatVersion}:1.0.0-M23",
+            blazeClient: "org.http4s:http4s-blaze-client_${scalaCompatVersion}:1.0.0-M23",
+            http4sCirce: "org.http4s:http4s-circe_${scalaCompatVersion}:1.0.0-M23"
     ]
+    circe = "io.circe:circe-generic_${scalaCompatVersion}:0.14.1"
 }
 
 allprojects {
