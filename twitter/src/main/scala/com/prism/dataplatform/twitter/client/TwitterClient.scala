@@ -18,11 +18,11 @@ trait TwitterClient {
   val httpClient = BlazeClientBuilder[IO](global).resource
 
   def setupSettings(config: TwitterConfig): Unit = {
+    config.bearerToken = authenticate.access_token
     _config = config
   }
 
   def authenticate(): AuthToken = {
-
     implicit val tokenDecoder: EntityDecoder[IO, AuthToken] = circe.jsonOf[IO, AuthToken]
 
     val uri: Uri = Uri.fromString(AUTH_API).getOrElse(throw IllegalArgumentException)
