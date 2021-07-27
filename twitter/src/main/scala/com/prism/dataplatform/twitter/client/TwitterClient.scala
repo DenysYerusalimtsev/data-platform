@@ -18,7 +18,6 @@ trait TwitterClient {
   val httpClient = BlazeClientBuilder[IO](global).resource
 
   def setupSettings(config: TwitterConfig): Unit = {
-    config.bearerToken = authenticate.access_token
     _config = config
   }
 
