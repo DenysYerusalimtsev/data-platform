@@ -5,6 +5,7 @@ import com.prism.dataplatform.twitter.config.Constants._
 import com.prism.dataplatform.twitter.config.TwitterConfig
 import com.prism.dataplatform.twitter.entities.auth.AuthToken
 import com.prism.dataplatform.twitter.entities.responses.{TweetCountResponse, TweetResponse}
+import com.prism.dataplatform.twitter.utils.TwitterUtils.UriQueryParametersBuilder
 import io.circe.generic.auto._
 import org.http4s.Method.{GET, POST}
 import org.http4s._
@@ -37,7 +38,7 @@ trait TwitterClient {
     implicit val tweetCountDecoder: EntityDecoder[IO, TweetCountResponse] = circe.jsonOf[IO, TweetCountResponse]
 
     val uri: Uri = Uri.fromString(RECENT_TWEETS_API).getOrElse(new Uri())
-      .withQueryParam("query", search)
+      .withQuery(search)
       .withQueryParam("granularity", GRANULARITY)
     val headers = Headers(Authorization(Credentials.Token(AuthScheme.Bearer, token)))
     val request = Request[IO](method = GET, uri = uri, headers = headers)
@@ -49,7 +50,14 @@ trait TwitterClient {
     implicit val tweetDecoder: EntityDecoder[IO, TweetResponse] = circe.jsonOf[IO, TweetResponse]
 
     val uri: Uri = Uri.fromString(SEARCH_TWEETS_API).getOrElse(new Uri())
-      .withQueryParam("query", search)
+      .withQuery(search)
+      .withTweetFields
+      .withMediaFields
+      .withPlaceFields
+      .withPollFields
+      .withUserFields
+      .withExpansions
+
     val headers = Headers(Authorization(Credentials.Token(AuthScheme.Bearer, token)))
     val request = Request[IO](method = GET, uri = uri, headers = headers)
 

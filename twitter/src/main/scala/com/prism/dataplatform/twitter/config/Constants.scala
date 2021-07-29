@@ -11,11 +11,12 @@ object Constants {
   final val RECENT_TWEETS_API = "https://api.twitter.com/2/tweets/counts/recent"
   final val SEARCH_TWEETS_API = "https://api.twitter.com/2/tweets/search/recent"
 
+  final val QUERY = "query"
   final val GRANULARITY = "day"
-  final val TWEET_FIELDS = ""
-  final val MEDIA_FIELDS = ""
-  final val PLACE_FIELDS = ""
-  final val POLL_FIELDS = ""
-  final val USER_FIELDS = ""
-  final val EXPANSIONS = ""
+  final val TWEET_FIELDS = "tweet.fields"
+  final val MEDIA_FIELDS = "media.fields"
+  final val PLACE_FIELDS = "place.fields"
+  final val POLL_FIELDS = "poll.fields"
+  final val USER_FIELDS = "user.fields"
+  final val EXPANSIONS = "expansions"
 }
