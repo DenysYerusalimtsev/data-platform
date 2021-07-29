@@ -78,7 +78,7 @@ object TwitterUtils {
         PollFields.VotingStatus
       )
 
-      uri.withQueryParam("", addParams(params))
+      uri.withQueryParam(POLL_FIELDS, addParams(params))
     }
 
     def withUserFields(): Uri = {
@@ -99,7 +99,7 @@ object TwitterUtils {
         UserFields.Withheld,
       )
 
-      uri.withQueryParam("", addParams(params))
+      uri.withQueryParam(USER_FIELDS, addParams(params))
     }
 
     def withExpansions(): Uri = {
@@ -114,10 +114,10 @@ object TwitterUtils {
         TweetExpansions.`ReferencedTweets.Id.AuthorId`
       )
 
-      uri.withQueryParam("expansions", addParams(params))
+      uri.withQueryParam(EXPANSIONS, addParams(params))
     }
 
-    private def addParams[A <: Enumeration](params: List[A]): String = {
+    private def addParams[A](params: List[A]): String = {
       params.mkString(",")
     }
   }

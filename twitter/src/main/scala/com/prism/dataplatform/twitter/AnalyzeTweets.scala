@@ -10,8 +10,8 @@ final class AnalyzeTweets extends FlinkJob[Config]
   override def script(): Unit = {
     logger.info("Application started")
     setupSettings(config.twitter)
-    //val tweets = authenticate().flatMap(token => getTweetsCount("lakers", token.access_token)).unsafeRunSync()
-    //print(tweets)
+    val tweets = authenticate().flatMap(token => searchTweets("lakers", token.access_token)).unsafeRunSync()
+    print(tweets)
   }
 }
 
