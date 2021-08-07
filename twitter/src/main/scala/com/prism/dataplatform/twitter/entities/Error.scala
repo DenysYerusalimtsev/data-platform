@@ -1,13 +1,13 @@
 package com.prism.dataplatform.twitter.entities
 
 final case class Error(
-                        detail: String,
+                        detail: Option[String],
                         field: Option[String],
-                        parameter: String,
-                        resource_id: String,
-                        resource_type: String,
+                        parameter: Option[String],
+                        resource_id: Option[String],
+                        resource_type: Option[String],
                         section: Option[String],
-                        title: String,
+                        title: Option[String],
                         `type`: Option[String],
                         value: Option[String]
                       )

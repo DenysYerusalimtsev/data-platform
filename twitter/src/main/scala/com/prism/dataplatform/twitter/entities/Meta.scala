@@ -1,8 +1,8 @@
 package com.prism.dataplatform.twitter.entities
 
 case class Meta(
-                 newest_id: String,
-                 oldest_id: String,
-                 result_count: Int,
-                 next_token: String
+                 newest_id: Option[String],
+                 oldest_id: Option[String],
+                 result_count: Option[Int],
+                 next_token: Option[String]
                )
