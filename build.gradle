@@ -7,11 +7,12 @@ group 'com.prism.dataplatform'
 version '1.0.0'
 
 ext {
-    scalaVersion = '2.12.13'
+    scalaVersion = '2.12.14'
     scalaCompatVersion = '2.12'
     sparkVersion = '3.1.0'
     flinkVersion = '1.12.2'
     flinkCompatVersion = '1.12'
+    http4sVersion = '1.0.0-M23'
 
     scalaDependencies = [
             lib    : "org.scala-lang:scala-library:${scalaVersion}",
@@ -33,10 +34,10 @@ ext {
     ]
     gson = "com.google.code.gson:gson:2.8.5"
     http = [
-            client     : "org.http4s:http4s-client_${scalaCompatVersion}:1.0.0-M23",
-            dsl        : "org.http4s:http4s-dsl_${scalaCompatVersion}:1.0.0-M23",
-            blazeClient: "org.http4s:http4s-blaze-client_${scalaCompatVersion}:1.0.0-M23",
-            http4sCirce: "org.http4s:http4s-circe_${scalaCompatVersion}:1.0.0-M23"
+            client     : "org.http4s:http4s-client_${scalaCompatVersion}:${http4sVersion}",
+            dsl        : "org.http4s:http4s-dsl_${scalaCompatVersion}:${http4sVersion}",
+            blazeClient: "org.http4s:http4s-blaze-client_${scalaCompatVersion}:${http4sVersion}",
+            http4sCirce: "org.http4s:http4s-circe_${scalaCompatVersion}:${http4sVersion}"
     ]
     circe = "io.circe:circe-generic_${scalaCompatVersion}:0.14.1"
 }
@@ -44,6 +45,16 @@ ext {
 allprojects {
     apply plugin: 'scala'
     apply plugin: 'java-library'
+    apply plugin: 'application'
+    applicationDefaultJvmArgs = ['-Xss256m']
+
+    tasks.withType(JavaCompile) {
+        options.compilerArgs += ['-Xss256m']
+    }
+
+    tasks.withType(ScalaCompile) {
+        options.compilerArgs += ['-Xss256m']
+    }
 
     repositories {
         mavenCentral()

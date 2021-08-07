@@ -1,45 +1,45 @@
 package com.prism.dataplatform.twitter.entities
 
 final case class TweetEntities(
-                                annotations: Seq[TweetEntitiesAnnotation],
-                                urls: Seq[TweetEntitiesURL],
-                                hashtags: Seq[TweetEntitiesHashtag],
-                                mentions: Seq[TweetEntitiesMention],
-                                cashtags: Seq[TweetEntitiesCashtag]
+                                annotations: Option[Seq[TweetEntitiesAnnotation]],
+                                urls: Option[Seq[TweetEntitiesURL]],
+                                hashtags: Option[Seq[TweetEntitiesHashtag]],
+                                mentions: Option[Seq[TweetEntitiesMention]],
+                                cashtags: Option[Seq[TweetEntitiesCashtag]]
                               )
 
 final case class TweetEntitiesAnnotation(
-                                          start: Int,
-                                          end: Int,
-                                          probability: Float,
-                                          `type`: String,
-                                          normalized_text: String
+                                          start: Option[Int],
+                                          end: Option[Int],
+                                          probability: Option[Float],
+                                          `type`: Option[String],
+                                          normalized_text: Option[String]
                                         )
 
 final case class TweetEntitiesURL(
-                                   start: Int,
-                                   end: Int,
-                                   url: String,
-                                   expanded_url: String,
-                                   display_url: String,
+                                   start: Option[Int],
+                                   end: Option[Int],
+                                   url: Option[String],
+                                   expanded_url: Option[String],
+                                   display_url: Option[String],
                                    unwound_url: Option[String]
                                  )
 
 final case class TweetEntitiesHashtag(
-                                       start: Int,
-                                       end: Int,
-                                       tag: String
+                                       start: Option[Int],
+                                       end: Option[Int],
+                                       tag: Option[String]
                                      )
 
 final case class TweetEntitiesMention(
-                                       start: Int,
-                                       end: Int,
+                                       start: Option[Int],
+                                       end: Option[Int],
                                        username: Option[String],
                                        id: Option[String]
                                      )
 
 final case class TweetEntitiesCashtag(
-                                       start: Int,
-                                       end: Int,
-                                       tag: String
+                                       start: Option[Int],
+                                       end: Option[Int],
+                                       tag: Option[String]
                                      )

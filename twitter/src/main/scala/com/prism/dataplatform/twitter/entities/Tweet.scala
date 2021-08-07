@@ -1,19 +1,13 @@
 package com.prism.dataplatform.twitter.entities
 
-import com.prism.dataplatform.twitter.entities.enums.CoordinatesType.CoordinatesType
-import com.prism.dataplatform.twitter.entities.enums.ReferencedTweetType.ReferencedTweetType
-import com.prism.dataplatform.twitter.entities.enums.TweetReplySetting.TweetReplySetting
-
-import java.time.Instant
-
 final case class Tweet(
-                        id: String,
-                        text: String,
+                        id: Option[String],
+                        text: Option[String],
                         attachments: Option[TweetAttachments],
                         author_id: Option[String],
                         context_annotations: Option[Seq[TweetContextAnnotation]],
                         conversation_id: Option[String],
-                        created_at: Option[Instant],
+                        created_at: Option[String],
                         entities: Option[TweetEntities],
                         geo: Option[TweetGeo],
                         in_reply_to_user_id: Option[String],
@@ -24,19 +18,19 @@ final case class Tweet(
                         promoted_metrics: Option[TweetPromotedMetrics],
                         public_metrics: Option[TweetPublicMetrics],
                         referenced_tweets: Option[Seq[TweetReferencedTweet]],
-                        reply_settings: Option[TweetReplySetting],
+                        reply_settings: Option[String],
                         source: Option[String],
                         withheld: Option[Withheld]
                       )
 
 final case class TweetAttachments(
-                                   media_keys: Seq[String],
-                                   poll_ids: Seq[String]
+                                   media_keys: Option[Seq[String]],
+                                   poll_ids: Option[Seq[String]]
                                  )
 
 final case class TweetContextAnnotation(
-                                         domain: TweetDomain,
-                                         entity: TweetEntity
+                                         domain: Option[TweetDomain],
+                                         entity: Option[TweetEntity]
                                        )
 
 final case class TweetGeo(
@@ -45,54 +39,54 @@ final case class TweetGeo(
                          )
 
 final case class TweetCoordinates(
-                                   `type`: CoordinatesType,
-                                   coordinates: (Double, Double)
+                                   `type`: Option[String],
+                                   coordinates: Option[(Double, Double)]
                                  )
 
 final case class TweetNonPublicMetrics(
-                                        impression_count: Int,
+                                        impression_count: Option[Int],
                                         url_link_clicks: Option[Int],
-                                        user_profile_clicks: Int
+                                        user_profile_clicks: Option[Int]
                                       )
 
 final case class TweetOrganicMetrics(
-                                      impression_count: Int,
+                                      impression_count: Option[Int],
                                       url_link_clicks: Option[Int],
-                                      user_profile_clicks: Int,
-                                      retweet_count: Int,
-                                      reply_count: Int,
-                                      like_count: Int
+                                      user_profile_clicks: Option[Int],
+                                      retweet_count: Option[Int],
+                                      reply_count: Option[Int],
+                                      like_count: Option[Int]
                                     )
 
 final case class TweetPromotedMetrics(
-                                       impression_count: Int,
+                                       impression_count: Option[Int],
                                        url_link_clicks: Option[Int],
-                                       user_profile_clicks: Int,
-                                       retweet_count: Int,
-                                       reply_count: Int,
-                                       like_count: Int
+                                       user_profile_clicks: Option[Int],
+                                       retweet_count: Option[Int],
+                                       reply_count: Option[Int],
+                                       like_count: Option[Int]
                                      )
 
 final case class TweetPublicMetrics(
-                                     retweet_count: Int,
-                                     reply_count: Int,
-                                     like_count: Int,
-                                     quote_count: Int
+                                     retweet_count: Option[Int],
+                                     reply_count: Option[Int],
+                                     like_count: Option[Int],
+                                     quote_count: Option[Int]
                                    )
 
 final case class TweetReferencedTweet(
-                                       `type`: ReferencedTweetType,
-                                       id: String
+                                       `type`: Option[String],
+                                       id: Option[String]
                                      )
 
 final case class TweetDomain(
-                              id: String,
-                              name: String,
+                              id: Option[String],
+                              name: Option[String],
                               description: Option[String]
                             )
 
 final case class TweetEntity(
-                              id: String,
-                              name: String,
+                              id: Option[String],
+                              name: Option[String],
                               description: Option[String]
                             )
