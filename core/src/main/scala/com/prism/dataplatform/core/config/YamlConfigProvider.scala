@@ -11,7 +11,7 @@ trait ConfigFile {
     new FileInputStream(new File(path))
 }
 
-private[core] trait YamlConfigProvider extends ConfigProvider with ConfigFile {
+trait YamlConfigProvider extends ConfigProvider with ConfigFile {
   override def configFrom[C: ClassTag](path: String): C = {
     val classInfo = classTag[C].runtimeClass
 

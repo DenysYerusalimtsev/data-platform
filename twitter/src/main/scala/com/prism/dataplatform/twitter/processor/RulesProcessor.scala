@@ -6,7 +6,7 @@ import com.prism.dataplatform.twitter.utils.TwitterUtils.RuleBuilder
 
 trait RulesProcessor {
   def addRules(rule: String): Rule =
-    Rule(value = Some(s"$rule OR #$rule"), tag = Some(rule + "with content"), id = null)
+    Rule(value = Some(s"$rule OR #$rule"), tag = Some(rule + " with content"))
 //      .withLinks
 //      .withMedia
 //      .withImages
