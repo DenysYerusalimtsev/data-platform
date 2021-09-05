@@ -75,7 +75,7 @@ trait TwitterRestClient {
     httpClient.use(client => client.expect[RulesResponse](request))
   }
 
-  def addRules(token: String, rules: AddRules): Unit = {
+  def applyRules(token: String, rules: AddRules): IO[AddRulesResponse] = {
     implicit val rulesDecoder: EntityDecoder[IO, AddRulesResponse] = circe.jsonOf[IO, AddRulesResponse]
 
     val uri: Uri = Uri.fromString(STREAM_RULES_API).getOrElse(new Uri())
@@ -97,9 +97,13 @@ trait TwitterRestClient {
     httpClient.use(client => client.expect[RulesResponse](request))
   }
 
-  def filteredStream(token: String): Unit = {
+  def filteredStream(token: String): IO[TweetsResponse] = {
+    implicit val tweetsDecoder: EntityDecoder[IO, TweetsResponse] = circe.jsonOf[IO, TweetsResponse]
+
     val uri: Uri = Uri.fromString(STREAM_RULES_API).getOrElse(new Uri())
     val headers = Headers(Authorization(Credentials.Token(AuthScheme.Bearer, token)))
     val request = Request[IO](method = GET, uri = uri, headers = headers)
+
+    httpClient.use(client => client.expect[TweetsResponse](request))
   }
 }

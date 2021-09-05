@@ -46,6 +46,7 @@ allprojects {
     apply plugin: 'scala'
     apply plugin: 'java-library'
     apply plugin: 'application'
+
     applicationDefaultJvmArgs = ['-Xss256m']
 
     tasks.withType(JavaCompile) {
@@ -70,13 +71,15 @@ allprojects {
         )
 
         testImplementation(
+                "junit:junit:4.12",
+                "org.scalatestplus:scalatestplus-junit_${scalaCompatVersion}:1.0.0-M2",
                 "org.mockito:mockito-scala_${scalaCompatVersion}:1.16.25",
                 "com.holdenkarau:spark-testing-base_${scalaCompatVersion}:3.0.1_1.0.0",
                 "org.apache.flink:flink-test-utils_${scalaCompatVersion}:1.12.2",
                 "org.apache.flink:flink-runtime_2.11:1.12.2"
         )
 
-        testImplementation("org.scalatest:scalatest_${scalaCompatVersion}:3.0.1") {
+        testImplementation("org.scalatest:scalatest_${scalaCompatVersion}:3.2.9") {
             force(true)
         }
     }

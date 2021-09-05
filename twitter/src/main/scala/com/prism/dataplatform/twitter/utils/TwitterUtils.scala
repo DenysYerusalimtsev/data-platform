@@ -1,6 +1,7 @@
 package com.prism.dataplatform.twitter.utils
 
 import com.prism.dataplatform.twitter.config.Constants._
+import com.prism.dataplatform.twitter.entities.Rule
 import com.prism.dataplatform.twitter.entities.enums.expansions.TweetExpansions
 import com.prism.dataplatform.twitter.entities.enums.fields._
 import org.http4s.Uri
@@ -120,5 +121,17 @@ object TwitterUtils {
     private def addParams[A](params: List[A]): String = {
       params.mkString(",")
     }
+  }
+
+  implicit class RuleBuilder(rule: Rule) {
+    def withLinks(): Rule = Rule(value = Some(s"${rule.value} has:links"), tag = rule.tag, id = rule.id)
+
+    def withMedia(): Rule = Rule(value = Some(s"${rule.value} OR has:media"), tag = rule.tag, id = rule.id)
+
+    def withImages(): Rule = Rule(value = Some(s"${rule.value} OR has:images"), tag = rule.tag, id = rule.id)
+
+    def withMentions(): Rule = Rule(value = Some(s"${rule.value} OR has:mentions"), tag = rule.tag, id = rule.id)
+
+    def withRetweets(): Rule = Rule(value = Some(s"${rule.value} OR is:retweet"), tag = rule.tag, id = rule.id)
   }
 }
