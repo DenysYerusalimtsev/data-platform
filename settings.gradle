@@ -3,4 +3,6 @@ include 'core'
 include 'spark'
 include 'flink'
 include 'twitter'
+include 'flink-twitter-connector'
+include 'twitter-common'
 

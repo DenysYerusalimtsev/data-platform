@@ -3,10 +3,10 @@ package com.prism.dataplatform.twitter.client
 import cats.effect.IO
 import com.prism.dataplatform.twitter.config.Constants._
 import com.prism.dataplatform.twitter.config.TwitterConfig
-import com.prism.dataplatform.twitter.entities.RuleDestruction
-import com.prism.dataplatform.twitter.entities.auth.AuthToken
-import com.prism.dataplatform.twitter.entities.requests.AddRules
-import com.prism.dataplatform.twitter.entities.responses.{AddRulesResponse, RulesResponse, TweetCountResponse, TweetsResponse}
+import com.prism.dataplatform.common.entities.RuleDestruction
+import com.prism.dataplatform.common.entities.auth.AuthToken
+import com.prism.dataplatform.common.entities.requests.AddRules
+import com.prism.dataplatform.common.entities.responses.{AddRulesResponse, RulesResponse, TweetCountResponse, TweetsResponse}
 import com.prism.dataplatform.twitter.utils.TwitterUtils.UriQueryParametersBuilder
 import io.circe.generic.auto._
 import org.http4s.Method.{GET, POST}
@@ -17,21 +17,15 @@ import org.http4s.headers.Authorization
 
 import scala.concurrent.ExecutionContext.global
 
-trait TwitterRestClient {
-  private var _twitterConfig: TwitterConfig = _
-  lazy val twitterConfig: TwitterConfig = _twitterConfig
+case class TwitterRestClient(config: TwitterConfig) {
   val httpClient = BlazeClientBuilder[IO](global).resource
-
-  def setupSettings(config: TwitterConfig): Unit = {
-    _twitterConfig = config
-  }
 
   def authenticate(): IO[AuthToken] = {
     implicit val tokenDecoder: EntityDecoder[IO, AuthToken] = circe.jsonOf[IO, AuthToken]
 
     val uri: Uri = Uri.fromString(AUTH_API).getOrElse(new Uri())
       .withQueryParam("grant_type", "client_credentials")
-    val headers = Headers(Authorization(BasicCredentials(twitterConfig.consumerKey, twitterConfig.consumerSecret)))
+    val headers = Headers(Authorization(BasicCredentials(config.consumerKey, config.consumerSecret)))
     val request = Request[IO](method = POST, uri = uri, headers = headers)
 
     httpClient.use(client => client.expect[AuthToken](request))
