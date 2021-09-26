@@ -5,7 +5,7 @@ import com.prism.dataplatform.twitter.config.Constants._
 import com.prism.dataplatform.twitter.config.TwitterConfig
 import com.prism.dataplatform.common.entities.RuleDestruction
 import com.prism.dataplatform.common.entities.auth.AuthToken
-import com.prism.dataplatform.common.entities.requests.AddRules
+import com.prism.dataplatform.common.entities.requests.{AddRules, DeleteRule}
 import com.prism.dataplatform.common.entities.responses.{AddRulesResponse, RulesResponse, TweetCountResponse, TweetsResponse}
 import com.prism.dataplatform.twitter.utils.TwitterUtils.UriQueryParametersBuilder
 import io.circe.generic.auto._
@@ -69,7 +69,7 @@ case class TwitterRestClient(config: TwitterConfig) {
     httpClient.use(client => client.expect[RulesResponse](request))
   }
 
-  def applyRules(token: String, rules: AddRules): IO[AddRulesResponse] = {
+  def applyRules(rules: AddRules, token: String): IO[AddRulesResponse] = {
     implicit val rulesDecoder: EntityDecoder[IO, AddRulesResponse] = circe.jsonOf[IO, AddRulesResponse]
 
     val uri: Uri = Uri.fromString(STREAM_RULES_API).getOrElse(new Uri())
@@ -80,7 +80,7 @@ case class TwitterRestClient(config: TwitterConfig) {
     httpClient.use(client => client.expect[AddRulesResponse](request))
   }
 
-  def deleteRules(token: String, rules: RuleDestruction): Unit = {
+  def deleteRules(rules: DeleteRule, token: String): IO[RulesResponse] = {
     implicit val rulesDecoder: EntityDecoder[IO, RulesResponse] = circe.jsonOf[IO, RulesResponse]
 
     val uri: Uri = Uri.fromString(STREAM_RULES_API).getOrElse(new Uri())

@@ -4,8 +4,8 @@ import cats.effect.unsafe.implicits.global
 import com.prism.dataplatform.core.config.YamlConfigProvider
 import com.prism.dataplatform.twitter.BaseTest
 import com.prism.dataplatform.twitter.config.{Config, TwitterConfig}
-import com.prism.dataplatform.common.entities.Rule
-import com.prism.dataplatform.common.entities.requests.AddRules
+import com.prism.dataplatform.common.entities.{Rule, RuleDestruction}
+import com.prism.dataplatform.common.entities.requests.{AddRules, DeleteRule}
 import com.prism.dataplatform.twitter.processor.RulesProcessor
 
 class TwitterRestClientSpec extends BaseTest {
@@ -16,19 +16,6 @@ class TwitterRestClientSpec extends BaseTest {
   val configProvider = new YamlConfigProvider {}
   val config: Config = configProvider.configFrom[Config]("D:\\Projects\\Prism-dp\\data-platform\\twitter\\src\\test\\resources\\twitter.yaml")
   val twitterClient = TwitterRestClient(config.twitter)
-
-  it should "successfully creates and applies new rules" in {
-
-    val rules: AddRules = AddRules(Seq[Rule](rulesProcessor.addRules("spacex")))
-
-    val testCase = for {
-      token <- twitterClient.authenticate
-      r <- twitterClient.applyRules(token.access_token, rules)
-    } yield r
-
-    testCase.map(resp => resp.meta.map(ruleMeta =>
-      assert(ruleMeta.sent.nonEmpty))).unsafeRunSync()
-  }
 
   it should "successfully authenticate in Twitter" in {
 
@@ -61,5 +48,46 @@ class TwitterRestClientSpec extends BaseTest {
       assert(resp.meta.nonEmpty)
       assert(resp.errors.isEmpty)
     }).unsafeRunSync()
+  }
+
+  it should "successfully creates and applies new rules" in {
+
+    val rules: AddRules = AddRules(Seq[Rule](rulesProcessor.addRules("spacex")))
+
+    val testCase = for {
+      token <- twitterClient.authenticate
+      rule <- twitterClient.applyRules(rules, token.access_token)
+    } yield rule
+
+    testCase.map(resp => resp.meta.map(ruleMeta =>
+      assert(ruleMeta.sent.nonEmpty))).unsafeRunSync()
+  }
+
+  it should "successfully retrieve rules applied on Twitter Stream" in {
+
+    val testCase = for {
+      token <- twitterClient.authenticate
+      rules <- twitterClient.retrieveRules(token.access_token)
+    } yield rules
+
+    testCase.map(resp => {
+      assert(resp.data.nonEmpty)
+      assert(resp.meta.nonEmpty)
+    }).unsafeRunSync()
+  }
+
+  it should "successfully delete applied rule from Twitter" in {
+
+    val rules: AddRules = AddRules(Seq[Rule](rulesProcessor.addRules("musk")))
+    val destructor = RuleDestruction(ids = None, values = Seq[String]("musk OR #musk"))
+    val deleteRequest = DeleteRule(destructor)
+    val testCase = for {
+      token <- twitterClient.authenticate
+      _ <- twitterClient.applyRules(rules, token.access_token)
+      destruct <- twitterClient.deleteRules(deleteRequest, token.access_token)
+    } yield destruct
+
+    testCase.map(resp => resp.meta.map(ruleMeta =>
+      assert(ruleMeta.sent.nonEmpty))).unsafeRunSync()
   }
 }

@@ -12,7 +12,6 @@ final case class Tweet(
                         geo: Option[TweetGeo],
                         in_reply_to_user_id: Option[String],
                         lang: Option[String],
-                        non_public_metrics: Option[TweetNonPublicMetrics],
                         organic_metrics: Option[TweetOrganicMetrics],
                         possibly_sensitive: Option[Boolean],
                         promoted_metrics: Option[TweetPromotedMetrics],

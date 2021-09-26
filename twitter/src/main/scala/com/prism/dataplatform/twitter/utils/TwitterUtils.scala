@@ -42,10 +42,7 @@ object TwitterUtils {
         MediaFields.DurationMs,
         MediaFields.Height,
         MediaFields.MediaKey,
-        MediaFields.NonPublicMetrics,
-        MediaFields.OrganicMetrics,
         MediaFields.PreviewImageUrl,
-        MediaFields.PromotedMetrics,
         MediaFields.PublicMetrics,
         MediaFields.Type,
         MediaFields.Url,
@@ -124,14 +121,14 @@ object TwitterUtils {
   }
 
   implicit class RuleBuilder(rule: Rule) {
-    def withLinks(): Rule = Rule(value = Some(s"${rule.value} has:links"), tag = rule.tag, id = rule.id)
+    def withLinks(): Rule = Rule(value = s"${rule.value} has:links", tag = rule.tag)
 
-    def withMedia(): Rule = Rule(value = Some(s"${rule.value} OR has:media"), tag = rule.tag, id = rule.id)
+    def withMedia(): Rule = Rule(value = s"${rule.value} OR has:media", tag = rule.tag)
 
-    def withImages(): Rule = Rule(value = Some(s"${rule.value} OR has:images"), tag = rule.tag, id = rule.id)
+    def withImages(): Rule = Rule(value = s"${rule.value} OR has:images", tag = rule.tag)
 
-    def withMentions(): Rule = Rule(value = Some(s"${rule.value} OR has:mentions"), tag = rule.tag, id = rule.id)
+    def withMentions(): Rule = Rule(value = s"${rule.value} OR has:mentions", tag = rule.tag)
 
-    def withRetweets(): Rule = Rule(value = Some(s"${rule.value} OR is:retweet"), tag = rule.tag, id = rule.id)
+    def withRetweets(): Rule = Rule(value = s"${rule.value} OR is:retweet", tag = rule.tag)
   }
 }
