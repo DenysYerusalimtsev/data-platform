@@ -29,4 +29,37 @@ class TwitterRestClientSpec extends BaseTest {
     testCase.map(resp => resp.meta.map(ruleMeta =>
       assert(ruleMeta.sent.nonEmpty))).unsafeRunSync()
   }
+
+  it should "successfully authenticate in Twitter" in {
+
+    val testCase = for {
+      token <- twitterClient.authenticate
+    } yield token
+
+    testCase.map(resp => assert(resp.access_token.nonEmpty)).unsafeRunSync()
+  }
+
+  it should "successfully count tweets with selected topic" in {
+
+    val testCase = for {
+      token <- twitterClient.authenticate
+      tweets <- twitterClient.countTweets("spacex", token.access_token)
+    } yield tweets
+
+    testCase.map(resp => assert(resp.data.nonEmpty)).unsafeRunSync()
+  }
+
+  it should "successfully search tweets with selected topic" in {
+
+    val testCase = for {
+      token <- twitterClient.authenticate
+      tweets <- twitterClient.searchTweets("spacex", token.access_token)
+    } yield tweets
+
+    testCase.map(resp => {
+      assert(resp.data.nonEmpty)
+      assert(resp.meta.nonEmpty)
+      assert(resp.errors.isEmpty)
+    }).unsafeRunSync()
+  }
 }
