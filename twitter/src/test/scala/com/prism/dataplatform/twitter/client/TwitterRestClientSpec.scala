@@ -90,4 +90,17 @@ class TwitterRestClientSpec extends BaseTest {
     testCase.map(resp => resp.meta.map(ruleMeta =>
       assert(ruleMeta.sent.nonEmpty))).unsafeRunSync()
   }
+
+  it should "successfully get filtered stream from Twitter" in {
+
+    val rules: AddRules = AddRules(Seq[Rule](rulesProcessor.addRules("covid19")))
+    val testCase = for {
+      token <- twitterClient.authenticate
+      _ <- twitterClient.applyRules(rules, token.access_token)
+      tweets <- twitterClient.filteredStream(token.access_token)
+    } yield tweets
+
+    testCase.map(resp => resp.data.map(data =>
+      println(data))).unsafeRunSync()
+  }
 }

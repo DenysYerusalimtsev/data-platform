@@ -17,12 +17,11 @@ final class AnalyzeTweets extends FlinkJob[Config]
     val rules: AddRules = AddRules(Seq[Rule](addRules("spacex")))
     val program = for {
       token <- twitterClient.authenticate
-      rules <- twitterClient.applyRules(rules, token.access_token)
       tweets <- twitterClient.filteredStream(token.access_token)
     } yield tweets
 
-    program.unsafeRunSync()
-    print(program)
+    program.map(resp => resp.data.map(tweet => println(tweet)))
+      .unsafeRunSync()
   }
 }
 

@@ -94,7 +94,15 @@ case class TwitterRestClient(config: TwitterConfig) {
   def filteredStream(token: String): IO[TweetsResponse] = {
     implicit val tweetsDecoder: EntityDecoder[IO, TweetsResponse] = circe.jsonOf[IO, TweetsResponse]
 
-    val uri: Uri = Uri.fromString(STREAM_RULES_API).getOrElse(new Uri())
+    val uri: Uri = Uri.fromString(SEARCH_TWEETS_STREAM_API).getOrElse(new Uri())
+      .withTweetFields
+      .withMediaFields
+      .withPlaceFields
+      .withPollFields
+      .withUserFields
+      .withExpansions
+
+
     val headers = Headers(Authorization(Credentials.Token(AuthScheme.Bearer, token)))
     val request = Request[IO](method = GET, uri = uri, headers = headers)
 
