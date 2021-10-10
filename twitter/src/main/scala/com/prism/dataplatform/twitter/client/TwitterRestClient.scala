@@ -1,24 +1,25 @@
 package com.prism.dataplatform.twitter.client
 
 import cats.effect.IO
+import cats.effect.kernel.Resource
 import com.prism.dataplatform.twitter.config.Constants._
 import com.prism.dataplatform.twitter.config.TwitterConfig
-import com.prism.dataplatform.common.entities.RuleDestruction
-import com.prism.dataplatform.common.entities.auth.AuthToken
-import com.prism.dataplatform.common.entities.requests.{AddRules, DeleteRule}
-import com.prism.dataplatform.common.entities.responses.{AddRulesResponse, RulesResponse, TweetCountResponse, TweetsResponse}
+import com.prism.dataplatform.twitter.entities.auth.AuthToken
+import com.prism.dataplatform.twitter.entities.requests.{AddRules, DeleteRule}
+import com.prism.dataplatform.twitter.entities.responses.{AddRulesResponse, RulesResponse, TweetCountResponse, TweetsResponse}
 import com.prism.dataplatform.twitter.utils.TwitterUtils.UriQueryParametersBuilder
 import io.circe.generic.auto._
 import org.http4s.Method.{GET, POST}
 import org.http4s._
 import org.http4s.blaze.client.BlazeClientBuilder
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder
+import org.http4s.client.Client
 import org.http4s.headers.Authorization
 
 import scala.concurrent.ExecutionContext.global
 
 case class TwitterRestClient(config: TwitterConfig) {
-  val httpClient = BlazeClientBuilder[IO](global).resource
+  val httpClient: Resource[IO, Client[IO]] = BlazeClientBuilder[IO](global).resource
 
   def authenticate(): IO[AuthToken] = {
     implicit val tokenDecoder: EntityDecoder[IO, AuthToken] = circe.jsonOf[IO, AuthToken]

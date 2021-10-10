@@ -1,11 +1,12 @@
 package com.prism.dataplatform.twitter.client
 
 import cats.effect.unsafe.implicits.global
+import com.prism.dataplatform.twitter.config.TwitterConfig
 import com.prism.dataplatform.core.config.YamlConfigProvider
 import com.prism.dataplatform.twitter.BaseTest
-import com.prism.dataplatform.twitter.config.{Config, TwitterConfig}
-import com.prism.dataplatform.common.entities.{Rule, RuleDestruction}
-import com.prism.dataplatform.common.entities.requests.{AddRules, DeleteRule}
+import com.prism.dataplatform.twitter.config.Config
+import com.prism.dataplatform.twitter.entities.{Rule, RuleDestruction}
+import com.prism.dataplatform.twitter.entities.requests.{AddRules, DeleteRule}
 import com.prism.dataplatform.twitter.processor.RulesProcessor
 
 class TwitterRestClientSpec extends BaseTest {

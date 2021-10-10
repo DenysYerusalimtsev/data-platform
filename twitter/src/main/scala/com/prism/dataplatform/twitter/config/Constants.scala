@@ -13,7 +13,6 @@ object Constants {
   final val STREAM_RULES_API = "https://api.twitter.com/2/tweets/search/stream/rules"
   final val SEARCH_TWEETS_STREAM_API = "https://api.twitter.com/2/tweets/search/stream"
 
-
   final val QUERY = "query"
   final val GRANULARITY = "day"
   final val TWEET_FIELDS = "tweet.fields"

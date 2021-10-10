@@ -4,5 +4,5 @@ include 'spark'
 include 'flink'
 include 'twitter'
 include 'flink-twitter-connector'
-include 'twitter-common'
+include 'analyze-tweet-pipeline'
 

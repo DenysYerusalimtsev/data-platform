@@ -5,6 +5,7 @@ dependencies {
     implementation(
             project(":core"),
             project(":flink"),
+            project(":twitter"),
             flink.twitter,
             flink.streaming,
             http.client,

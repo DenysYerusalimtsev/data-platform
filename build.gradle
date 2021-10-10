@@ -13,6 +13,7 @@ ext {
     flinkVersion = '1.12.2'
     flinkCompatVersion = '1.12'
     http4sVersion = '1.0.0-M23'
+    catsVersion = '2.6.1'
 
     scalaDependencies = [
             lib    : "org.scala-lang:scala-library:${scalaVersion}",
@@ -40,6 +41,10 @@ ext {
             http4sCirce: "org.http4s:http4s-circe_${scalaCompatVersion}:${http4sVersion}"
     ]
     circe = "io.circe:circe-generic_${scalaCompatVersion}:0.14.1"
+    cats = [
+            core: "org.typelevel:cats-core_${scalaCompatVersion}:${catsVersion}",
+            effect: "org.typelevel:cats-effect_${scalaCompatVersion}:3.2.9"
+    ]
 }
 
 allprojects {

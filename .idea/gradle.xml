@@ -11,12 +11,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/analyze-tweet-pipeline" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/flink" />
             <option value="$PROJECT_DIR$/flink-twitter-connector" />
             <option value="$PROJECT_DIR$/spark" />
             <option value="$PROJECT_DIR$/twitter" />
-            <option value="$PROJECT_DIR$/twitter-common" />
           </set>
         </option>
       </GradleProjectSettings>

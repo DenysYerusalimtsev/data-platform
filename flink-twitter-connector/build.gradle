@@ -5,7 +5,8 @@ dependencies {
     implementation(
             project(":core"),
             project(":flink"),
-            project(":twitter-common"),
-            flink.streaming
+            project(":twitter"),
+            flink.streaming,
+            cats.effect
     )
 }

@@ -1,9 +1,9 @@
 package com.prism.dataplatform.twitter.utils
 
 import com.prism.dataplatform.twitter.config.Constants._
-import com.prism.dataplatform.common.entities.Rule
-import com.prism.dataplatform.common.entities.enums.expansions.TweetExpansions
-import com.prism.dataplatform.common.entities.enums.fields._
+import com.prism.dataplatform.twitter.entities.Rule
+import com.prism.dataplatform.twitter.entities.enums.expansions.TweetExpansions
+import com.prism.dataplatform.twitter.entities.enums.fields._
 import org.http4s.Uri
 
 object TwitterUtils {
