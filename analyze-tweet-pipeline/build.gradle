@@ -6,12 +6,14 @@ dependencies {
             project(":core"),
             project(":flink"),
             project(":twitter"),
+            project(":flink-twitter-connector"),
             flink.twitter,
             flink.streaming,
             http.client,
             http.dsl,
             http.blazeClient,
             http.http4sCirce,
-            circe
+            circe,
+            gson
     )
 }

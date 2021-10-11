@@ -9,3 +9,9 @@ class TwitterConfig {
   @BeanProperty var token: String = _
   @BeanProperty var tokenSecret: String = _
 }
+
+case class TConfig(consumerKey: String,
+                   consumerSecret: String,
+                   bearerToken: String,
+                   token: String,
+                   tokenSecret: String)

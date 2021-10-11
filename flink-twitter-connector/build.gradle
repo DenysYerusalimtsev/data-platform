@@ -7,6 +7,7 @@ dependencies {
             project(":flink"),
             project(":twitter"),
             flink.streaming,
-            cats.effect
+            cats.effect,
+            gson
     )
 }

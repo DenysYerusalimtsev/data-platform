@@ -33,7 +33,7 @@ ext {
             scala    : "org.apache.flink:flink-scala_${scalaCompatVersion}:${flinkVersion}",
             twitter  : "org.apache.flink:flink-connector-twitter_${scalaCompatVersion}:${flinkVersion}"
     ]
-    gson = "com.google.code.gson:gson:2.8.5"
+    gson = "com.google.code.gson:gson:2.8.8"
     http = [
             client     : "org.http4s:http4s-client_${scalaCompatVersion}:${http4sVersion}",
             dsl        : "org.http4s:http4s-dsl_${scalaCompatVersion}:${http4sVersion}",
@@ -42,7 +42,7 @@ ext {
     ]
     circe = "io.circe:circe-generic_${scalaCompatVersion}:0.14.1"
     cats = [
-            core: "org.typelevel:cats-core_${scalaCompatVersion}:${catsVersion}",
+            core  : "org.typelevel:cats-core_${scalaCompatVersion}:${catsVersion}",
             effect: "org.typelevel:cats-effect_${scalaCompatVersion}:3.2.9"
     ]
 }
@@ -83,6 +83,10 @@ allprojects {
                 "org.apache.flink:flink-test-utils_${scalaCompatVersion}:1.12.2",
                 "org.apache.flink:flink-runtime_2.11:1.12.2"
         )
+
+        compile("com.holdenkarau:spark-testing-base_${scalaCompatVersion}:3.0.1_1.0.0") {
+            exclude group: 'com.google.code.gson', module: 'gson'
+        }
 
         testImplementation("org.scalatest:scalatest_${scalaCompatVersion}:3.2.9") {
             force(true)
