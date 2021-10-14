@@ -5,7 +5,7 @@ final case class UserEntities(
                                description: Option[UserEntitiesDescription]
                              )
 
-final case class UserURLContainer(urls: Seq[UserEntitiesURL])
+final case class UserURLContainer(urls: Array[UserEntitiesURL])
 
 final case class UserEntitiesURL(
                                   start: Int,
@@ -16,10 +16,10 @@ final case class UserEntitiesURL(
                                 )
 
 final case class UserEntitiesDescription(
-                                          urls: Seq[UserEntitiesURL],
-                                          hashtags: Seq[UserEntitiesHashtag],
-                                          mentions: Seq[UserEntitiesMention],
-                                          cashtags: Seq[UserEntitiesCashtag]
+                                          urls: Array[UserEntitiesURL],
+                                          hashtags: Array[UserEntitiesHashtag],
+                                          mentions: Array[UserEntitiesMention],
+                                          cashtags: Array[UserEntitiesCashtag]
                                         )
 
 final case class UserEntitiesHashtag(

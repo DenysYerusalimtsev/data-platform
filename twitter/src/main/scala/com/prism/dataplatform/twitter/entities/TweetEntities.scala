@@ -1,11 +1,11 @@
 package com.prism.dataplatform.twitter.entities
 
 final case class TweetEntities(
-                                annotations: Option[Seq[TweetEntitiesAnnotation]],
-                                urls: Option[Seq[TweetEntitiesURL]],
-                                hashtags: Option[Seq[TweetEntitiesHashtag]],
-                                mentions: Option[Seq[TweetEntitiesMention]],
-                                cashtags: Option[Seq[TweetEntitiesCashtag]]
+                                annotations: Option[Array[TweetEntitiesAnnotation]],
+                                urls: Option[Array[TweetEntitiesURL]],
+                                hashtags: Option[Array[TweetEntitiesHashtag]],
+                                mentions: Option[Array[TweetEntitiesMention]],
+                                cashtags: Option[Array[TweetEntitiesCashtag]]
                               )
 
 final case class TweetEntitiesAnnotation(

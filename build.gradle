@@ -10,8 +10,8 @@ ext {
     scalaVersion = '2.12.14'
     scalaCompatVersion = '2.12'
     sparkVersion = '3.1.0'
-    flinkVersion = '1.12.2'
-    flinkCompatVersion = '1.12'
+    flinkVersion = '1.13.2'
+    flinkCompatVersion = '1.13'
     http4sVersion = '1.0.0-M23'
     catsVersion = '2.6.1'
 
@@ -20,6 +20,7 @@ ext {
             logging: "com.typesafe.scala-logging:scala-logging_${scalaCompatVersion}:3.9.2",
             log4j  : "org.apache.logging.log4j:log4j-slf4j-impl:2.11.0",
             scopt  : "com.github.scopt:scopt_${scalaCompatVersion}:4.0.0",
+//            reflect: "org.scala-lang:scala-reflect:2.13.6",
             yaml   : "org.yaml:snakeyaml:1.27"
     ]
     spark = [
@@ -83,10 +84,6 @@ allprojects {
                 "org.apache.flink:flink-test-utils_${scalaCompatVersion}:1.12.2",
                 "org.apache.flink:flink-runtime_2.11:1.12.2"
         )
-
-        compile("com.holdenkarau:spark-testing-base_${scalaCompatVersion}:3.0.1_1.0.0") {
-            exclude group: 'com.google.code.gson', module: 'gson'
-        }
 
         testImplementation("org.scalatest:scalatest_${scalaCompatVersion}:3.2.9") {
             force(true)

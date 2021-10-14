@@ -4,5 +4,5 @@ import com.prism.dataplatform.twitter.entities.{Error, RuleMeta}
 
 case class DeleteRulesResponse(
                                 meta: Option[RuleMeta],
-                                errors: Option[Seq[Error]]
+                                errors: Option[Array[Error]]
                               )

@@ -5,7 +5,7 @@ final case class Tweet(
                         text: Option[String],
                         attachments: Option[TweetAttachments],
                         author_id: Option[String],
-                        context_annotations: Option[Seq[TweetContextAnnotation]],
+                        context_annotations: Option[Array[TweetContextAnnotation]],
                         conversation_id: Option[String],
                         created_at: Option[String],
                         entities: Option[TweetEntities],
@@ -16,15 +16,15 @@ final case class Tweet(
                         possibly_sensitive: Option[Boolean],
                         promoted_metrics: Option[TweetPromotedMetrics],
                         public_metrics: Option[TweetPublicMetrics],
-                        referenced_tweets: Option[Seq[TweetReferencedTweet]],
+                        referenced_tweets: Option[Array[TweetReferencedTweet]],
                         reply_settings: Option[String],
                         source: Option[String],
                         withheld: Option[Withheld]
                       )
 
 final case class TweetAttachments(
-                                   media_keys: Option[Seq[String]],
-                                   poll_ids: Option[Seq[String]]
+                                   media_keys: Option[Array[String]],
+                                   poll_ids: Option[Array[String]]
                                  )
 
 final case class TweetContextAnnotation(
