@@ -20,7 +20,6 @@ ext {
             logging: "com.typesafe.scala-logging:scala-logging_${scalaCompatVersion}:3.9.2",
             log4j  : "org.apache.logging.log4j:log4j-slf4j-impl:2.11.0",
             scopt  : "com.github.scopt:scopt_${scalaCompatVersion}:4.0.0",
-//            reflect: "org.scala-lang:scala-reflect:2.13.6",
             yaml   : "org.yaml:snakeyaml:1.27"
     ]
     spark = [
@@ -32,7 +31,9 @@ ext {
             clients  : "org.apache.flink:flink-clients_${scalaCompatVersion}:${flinkVersion}",
             streaming: "org.apache.flink:flink-streaming-scala_${scalaCompatVersion}:${flinkVersion}",
             scala    : "org.apache.flink:flink-scala_${scalaCompatVersion}:${flinkVersion}",
-            twitter  : "org.apache.flink:flink-connector-twitter_${scalaCompatVersion}:${flinkVersion}"
+            twitter  : "org.apache.flink:flink-connector-twitter_${scalaCompatVersion}:${flinkVersion}",
+            avro     : "org.apache.flink:flink-avro:${flinkVersion}"
+
     ]
     gson = "com.google.code.gson:gson:2.8.8"
     http = [

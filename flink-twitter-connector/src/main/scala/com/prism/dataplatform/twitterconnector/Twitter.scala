@@ -3,7 +3,7 @@ package com.prism.dataplatform.twitterconnector
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 import com.prism.dataplatform.twitter.client.TwitterRestClient
-import com.prism.dataplatform.twitter.config.TConfig
+import com.prism.dataplatform.twitter.config.{TConfig, TwitterConfig}
 import com.prism.dataplatform.twitter.entities.responses.TweetsResponse
 import com.prism.dataplatform.twitter.serializer.JsonSerializer
 import com.typesafe.scalalogging.LazyLogging
