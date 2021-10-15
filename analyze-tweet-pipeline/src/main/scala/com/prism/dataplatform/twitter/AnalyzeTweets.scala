@@ -9,7 +9,7 @@ import org.apache.avro.reflect.{ReflectData, ReflectDatumWriter}
 import org.apache.flink.api.scala.createTypeInformation
 import org.apache.flink.core.fs.Path
 import org.apache.flink.formats.avro.{AvroBuilder, AvroWriterFactory}
-import org.apache.flink.streaming.api.functions.sink.filesystem.StreamingFileSink
+import org.apache.flink.streaming.api.functions.sink.filesystem.{OutputFileConfig, StreamingFileSink}
 
 import java.io.OutputStream
 
@@ -40,9 +40,15 @@ final class AnalyzeTweets extends FlinkJob[Config] {
       }
     })
 
+    val outputConfig = OutputFileConfig
+      .builder()
+      .withPartPrefix("output")
+      .withPartSuffix(".avro")
+      .build()
 
     val sink = StreamingFileSink.forBulkFormat(
-      new Path("D:\\sink\\test.avro"), factory)
+      new Path("D:\\sink"), factory)
+      .withOutputFileConfig(outputConfig)
       .build()
 
     tweets.addSink(sink)

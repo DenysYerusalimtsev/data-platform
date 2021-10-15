@@ -3,11 +3,12 @@ package com.prism.dataplatform.twitterconnector
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 import com.prism.dataplatform.twitter.client.TwitterRestClient
-import com.prism.dataplatform.twitter.config.{TConfig, TwitterConfig}
+import com.prism.dataplatform.twitter.config.TConfig
 import com.prism.dataplatform.twitter.entities.responses.TweetsResponse
 import com.prism.dataplatform.twitter.serializer.JsonSerializer
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.flink.configuration.Configuration
+import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
 import org.apache.flink.streaming.api.functions.source.{RichSourceFunction, SourceFunction}
 
 case class Twitter(config: TConfig) extends RichSourceFunction[TweetsResponse]
@@ -38,7 +39,7 @@ case class Twitter(config: TConfig) extends RichSourceFunction[TweetsResponse]
     running = false
   }
 
-  private def process(response: TweetsResponse)(implicit ctx: SourceFunction.SourceContext[TweetsResponse]): IO[Unit] = {
+  private def process(response: TweetsResponse)(implicit ctx: SourceContext[TweetsResponse]): IO[Unit] = {
     ctx.synchronized {
       IO(ctx.collect(response))
     }

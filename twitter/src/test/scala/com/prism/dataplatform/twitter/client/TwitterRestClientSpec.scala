@@ -17,7 +17,13 @@ class TwitterRestClientSpec extends BaseTest {
   val config: Config = configProvider.configFrom[Config]("D:\\Projects\\Prism-dp\\data-platform\\twitter\\src\\test\\resources\\twitter.yaml")
 
   //TODO: Remove empty config
-  val tconfig = TConfig("", "", "", "", "")
+  val tconfig = TConfig(
+    config.twitter.consumerKey,
+    config.twitter.consumerSecret,
+    config.twitter.bearerToken,
+    config.twitter.token,
+    config.twitter.tokenSecret
+  )
   val twitterClient = TwitterRestClient(tconfig)
 
   it should "successfully authenticate in Twitter" in {
@@ -82,7 +88,7 @@ class TwitterRestClientSpec extends BaseTest {
   it should "successfully delete applied rule from Twitter" in {
 
     val rules: AddRules = AddRules(Seq[Rule](rulesProcessor.addRules("musk")))
-    val destructor = RuleDestruction(ids = None, values = Seq[String]("musk OR #musk"))
+    val destructor = RuleDestruction(ids = None, values = Array[String]("musk OR #musk"))
     val deleteRequest = DeleteRule(destructor)
     val testCase = for {
       token <- twitterClient.authenticate
@@ -105,5 +111,18 @@ class TwitterRestClientSpec extends BaseTest {
 
     testCase.map(resp => resp.data.map(data =>
       println(data))).unsafeRunSync()
+  }
+
+  it should "successfully get filtered string stream from Twitter" in {
+
+    val rules: AddRules = AddRules(Seq[Rule](rulesProcessor.addRules("covid19")))
+    val testCase = for {
+      token <- twitterClient.authenticate
+      _ <- twitterClient.applyRules(rules, token.access_token)
+      tweets <- twitterClient.filteredStringStream(token.access_token)
+    } yield tweets
+
+    testCase.map(resp => assert(resp.nonEmpty))
+      .unsafeRunSync()
   }
 }
