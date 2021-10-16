@@ -3,7 +3,7 @@ package com.prism.dataplatform.twitter.client
 import cats.effect.IO
 import cats.effect.kernel.Resource
 import com.prism.dataplatform.twitter.config.Constants._
-import com.prism.dataplatform.twitter.config.{TConfig, TwitterConfig}
+import com.prism.dataplatform.twitter.config.TConfig
 import com.prism.dataplatform.twitter.entities.auth.AuthToken
 import com.prism.dataplatform.twitter.entities.requests.{AddRules, DeleteRule}
 import com.prism.dataplatform.twitter.entities.responses.{AddRulesResponse, RulesResponse, TweetCountResponse, TweetsResponse}
@@ -103,7 +103,6 @@ case class TwitterRestClient(config: TConfig) {
       .withUserFields
       .withExpansions
 
-
     val headers = Headers(Authorization(Credentials.Token(AuthScheme.Bearer, token)))
     val request = Request[IO](method = GET, uri = uri, headers = headers)
 
@@ -120,7 +119,6 @@ case class TwitterRestClient(config: TConfig) {
       .withPollFields
       .withUserFields
       .withExpansions
-
 
     val headers = Headers(Authorization(Credentials.Token(AuthScheme.Bearer, token)))
     val request = Request[IO](method = GET, uri = uri, headers = headers)

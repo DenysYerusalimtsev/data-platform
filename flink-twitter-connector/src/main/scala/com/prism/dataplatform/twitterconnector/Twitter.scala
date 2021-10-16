@@ -1,37 +1,38 @@
 package com.prism.dataplatform.twitterconnector
 
-import cats.effect.IO
 import cats.effect.unsafe.implicits.global
-import com.prism.dataplatform.twitter.client.TwitterRestClient
+import cats.effect.{ExitCode, IO}
+import com.prism.dataplatform.twitter.client.{TwitterRestClient, TwitterStreamingClient}
 import com.prism.dataplatform.twitter.config.TConfig
 import com.prism.dataplatform.twitter.entities.responses.TweetsResponse
 import com.prism.dataplatform.twitter.serializer.JsonSerializer
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.flink.configuration.Configuration
+import org.apache.flink.streaming.api.functions.source.RichSourceFunction
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
-import org.apache.flink.streaming.api.functions.source.{RichSourceFunction, SourceFunction}
+import fs2.Stream
 
 case class Twitter(config: TConfig) extends RichSourceFunction[TweetsResponse]
   with LazyLogging {
   @transient var serializer: JsonSerializer = _
   @transient var twitterClient: TwitterRestClient = _
+  @transient var streamingClient: TwitterStreamingClient[IO] = _
   @transient var running: Boolean = _
 
   override def open(parameters: Configuration): Unit = {
     serializer = new JsonSerializer()
     twitterClient = TwitterRestClient(config)
+    streamingClient = new TwitterStreamingClient[IO](config)
     running = true
   }
 
-  override def run(ctx: SourceFunction.SourceContext[TweetsResponse]): Unit = {
+  override def run(ctx: SourceContext[TweetsResponse]): Unit = {
     logger.info("Connecting to Twitter...")
-    val program = for {
-      token <- twitterClient.authenticate
-      json <- twitterClient.filteredStringStream(token.access_token)
-      tweets <- serializer.fromJson[TweetsResponse](json)
-      _ <- process(tweets)(ctx)
-    } yield ()
-    program.unsafeRunSync()
+    while (running) {
+      val token = twitterClient.authenticate.unsafeRunSync()
+      val tweets = streamingClient.streamTweets(token.access_token)
+      tweets.map(tweet => process(tweet)(ctx)).compile.drain.unsafeRunSync
+    }
   }
 
   override def cancel(): Unit = {

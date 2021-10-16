@@ -42,7 +42,8 @@ final class AnalyzeTweets extends FlinkJob[Config] {
 
     val outputConfig = OutputFileConfig
       .builder()
-      .withPartPrefix("output")
+      .withPartPrefix(
+        "output")
       .withPartSuffix(".avro")
       .build()
 

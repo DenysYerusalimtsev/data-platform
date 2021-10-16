@@ -47,6 +47,9 @@ ext {
             core  : "org.typelevel:cats-core_${scalaCompatVersion}:${catsVersion}",
             effect: "org.typelevel:cats-effect_${scalaCompatVersion}:3.2.9"
     ]
+    fs2 = [
+            core: "co.fs2:fs2-core_${scalaCompatVersion}:3.0.4"
+    ]
 }
 
 allprojects {
