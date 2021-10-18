@@ -1,7 +1,7 @@
 package com.prism.dataplatform.twitter.entities
 
 final case class Withheld(
-                           copyright: Boolean,
+                           copyright: Option[Boolean],
                            country_codes: Array[String],
-                           scope: String
+                           scope: Option[String]
                          )

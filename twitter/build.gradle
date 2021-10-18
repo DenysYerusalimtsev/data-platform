@@ -11,7 +11,6 @@ dependencies {
             http.dsl,
             http.blazeClient,
             http.http4sCirce,
-            circe,
-            gson
+            circe.generic
     )
 }

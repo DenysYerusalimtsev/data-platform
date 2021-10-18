@@ -22,10 +22,16 @@ final case class Tweet(
                         withheld: Option[Withheld]
                       )
 
+final case class TweetTest(id: Option[String])
+
 final case class TweetAttachments(
                                    media_keys: Option[Array[String]],
                                    poll_ids: Option[Array[String]]
-                                 )
+                                 ) {
+  def this() {
+    this(media_keys = Some(Array.empty), poll_ids = Some(Array.empty))
+  }
+}
 
 final case class TweetContextAnnotation(
                                          domain: Option[TweetDomain],

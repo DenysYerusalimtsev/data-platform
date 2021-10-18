@@ -2,7 +2,7 @@ package com.prism.dataplatform.twitter
 
 import com.prism.dataplatform.flink.FlinkJob
 import com.prism.dataplatform.twitter.config.{Config, TConfig}
-import com.prism.dataplatform.twitter.entities.responses.TweetsResponse
+import com.prism.dataplatform.twitter.entities.responses.{TweetResponse, TweetsResponse}
 import com.prism.dataplatform.twitterconnector.Twitter
 import org.apache.avro.file.{CodecFactory, DataFileWriter}
 import org.apache.avro.reflect.{ReflectData, ReflectDatumWriter}
@@ -28,12 +28,12 @@ final class AnalyzeTweets extends FlinkJob[Config] {
       env.addSource(Twitter(tconfig))
         .name("Tweets")
 
-    val factory = new AvroWriterFactory[TweetsResponse](new AvroBuilder[TweetsResponse]() {
-      override def createWriter(out: OutputStream): DataFileWriter[TweetsResponse] = {
-        val schema = ReflectData.get.getSchema(classOf[TweetsResponse])
-        val datumWriter = new ReflectDatumWriter[TweetsResponse](schema)
+    val factory = new AvroWriterFactory[TweetResponse](new AvroBuilder[TweetResponse]() {
+      override def createWriter(out: OutputStream): DataFileWriter[TweetResponse] = {
+        val schema = ReflectData.get.getSchema(classOf[TweetResponse])
+        val datumWriter = new ReflectDatumWriter[TweetResponse](schema)
 
-        val dataFileWriter = new DataFileWriter[TweetsResponse](datumWriter)
+        val dataFileWriter = new DataFileWriter[TweetResponse](datumWriter)
         dataFileWriter.setCodec(CodecFactory.snappyCodec)
         dataFileWriter.create(schema, out)
         dataFileWriter
@@ -52,7 +52,7 @@ final class AnalyzeTweets extends FlinkJob[Config] {
       .withOutputFileConfig(outputConfig)
       .build()
 
-    tweets.addSink(sink)
+    tweets.print()
   }
 }
 

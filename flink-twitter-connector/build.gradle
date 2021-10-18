@@ -9,6 +9,6 @@ dependencies {
             flink.streaming,
             cats.effect,
             fs2.core,
-            gson
+            json4s
     )
 }
