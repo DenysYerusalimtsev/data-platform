@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaCompilerConfiguration">
-    <profile name="Gradle 1" modules="data-platform.analyze-tweet-pipeline.main,data-platform.analyze-tweet-pipeline.test,data-platform.core.main,data-platform.core.test,data-platform.flink-twitter-connector.main,data-platform.flink-twitter-connector.test,data-platform.flink.main,data-platform.flink.test,data-platform.main,data-platform.spark.main,data-platform.spark.test,data-platform.test,data-platform.twitter-common.main,data-platform.twitter-common.test,data-platform.twitter.main,data-platform.twitter.test">
+    <profile name="Gradle 1" modules="data-platform.analyze-tweet-pipeline.main,data-platform.analyze-tweet-pipeline.test,data-platform.azure.main,data-platform.azure.test,data-platform.core.main,data-platform.core.test,data-platform.flink-twitter-connector.main,data-platform.flink-twitter-connector.test,data-platform.flink.main,data-platform.flink.test,data-platform.main,data-platform.spark.main,data-platform.spark.test,data-platform.test,data-platform.twitter-common.main,data-platform.twitter-common.test,data-platform.twitter.main,data-platform.twitter.test">
       <option name="deprecationWarnings" value="true" />
       <option name="uncheckedWarnings" value="true" />
       <parameters>

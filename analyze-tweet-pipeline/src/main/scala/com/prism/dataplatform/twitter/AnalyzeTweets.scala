@@ -2,7 +2,7 @@ package com.prism.dataplatform.twitter
 
 import com.prism.dataplatform.flink.FlinkJob
 import com.prism.dataplatform.twitter.config.{Config, TConfig}
-import com.prism.dataplatform.twitter.entities.responses.{TweetResponse, TweetsResponse}
+import com.prism.dataplatform.twitter.entities.responses.TweetResponse
 import com.prism.dataplatform.twitterconnector.Twitter
 import org.apache.avro.file.{CodecFactory, DataFileWriter}
 import org.apache.avro.reflect.{ReflectData, ReflectDatumWriter}

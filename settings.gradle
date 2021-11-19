@@ -5,4 +5,5 @@ include 'flink'
 include 'twitter'
 include 'flink-twitter-connector'
 include 'analyze-tweet-pipeline'
+include 'azure'
 
