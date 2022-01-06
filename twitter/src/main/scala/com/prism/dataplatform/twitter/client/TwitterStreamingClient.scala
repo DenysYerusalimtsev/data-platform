@@ -2,7 +2,7 @@ package com.prism.dataplatform.twitter.client
 
 import cats.effect._
 import com.prism.dataplatform.twitter.config.Constants.SEARCH_TWEETS_STREAM_API
-import com.prism.dataplatform.twitter.config.TConfig
+import com.prism.dataplatform.twitter.config.TwitterConfig
 import com.prism.dataplatform.twitter.utils.TwitterUtils.UriQueryParametersBuilder
 import fs2.Stream
 import io.circe.Json
@@ -16,8 +16,8 @@ import org.typelevel.jawn.fs2.JsonStreamSyntax
 import scala.concurrent.ExecutionContext.global
 import scala.language.higherKinds
 
-class TwitterStreamingClient[F[_]](config: TConfig)(implicit F: Async[F], cs: Spawn[F]) {
-  implicit val f = CirceSupportParser.facade
+class TwitterStreamingClient[F[_]](config: TwitterConfig)(implicit F: Async[F], cs: Spawn[F]) {
+  implicit val facade = CirceSupportParser.facade
 
   def filteredStream(token: String): Stream[F, Json] = {
     val uri: Uri = Uri.fromString(SEARCH_TWEETS_STREAM_API).getOrElse(new Uri())
@@ -31,7 +31,7 @@ class TwitterStreamingClient[F[_]](config: TConfig)(implicit F: Async[F], cs: Sp
     val headers = Headers(Authorization(Credentials.Token(AuthScheme.Bearer, token)))
     val request = Request[F](method = GET, uri = uri, headers = headers)
     for {
-      client <- BlazeClientBuilder(global).stream
+      client <- BlazeClientBuilder[F].withExecutionContext(global).stream
       response <- client.stream(request).flatMap(_.body.chunks.parseJsonStream)
     } yield response
   }

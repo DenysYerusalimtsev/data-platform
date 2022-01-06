@@ -1,7 +1,7 @@
 package com.prism.dataplatform.twitter.client
 
 import cats.effect.unsafe.implicits.global
-import com.prism.dataplatform.twitter.config.{Config, TConfig, TwitterConfig}
+import com.prism.dataplatform.twitter.config.{Config, TwitterConfig, TwitterProperties}
 import com.prism.dataplatform.core.config.YamlConfigProvider
 import com.prism.dataplatform.twitter.BaseTest
 import com.prism.dataplatform.twitter.entities.{Rule, RuleDestruction}
@@ -12,12 +12,12 @@ class TwitterRestClientSpec extends BaseTest {
   behavior of classOf[TwitterRestClient].getSimpleName
 
   val rulesProcessor = new RulesProcessor {}
-  val twitterConfig = new TwitterConfig()
+  val twitterConfig = new TwitterProperties()
   val configProvider = new YamlConfigProvider {}
   val config: Config = configProvider.configFrom[Config]("D:\\Projects\\Prism-dp\\data-platform\\twitter\\src\\test\\resources\\twitter.yaml")
 
   //TODO: Remove empty config
-  val tconfig = TConfig(
+  val tconfig = TwitterConfig(
     config.twitter.consumerKey,
     config.twitter.consumerSecret,
     config.twitter.bearerToken,

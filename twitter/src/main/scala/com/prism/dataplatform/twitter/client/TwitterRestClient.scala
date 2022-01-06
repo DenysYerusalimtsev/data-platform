@@ -3,7 +3,7 @@ package com.prism.dataplatform.twitter.client
 import cats.effect.IO
 import cats.effect.kernel.Resource
 import com.prism.dataplatform.twitter.config.Constants._
-import com.prism.dataplatform.twitter.config.TConfig
+import com.prism.dataplatform.twitter.config.TwitterConfig
 import com.prism.dataplatform.twitter.entities.auth.AuthToken
 import com.prism.dataplatform.twitter.entities.requests.{AddRules, DeleteRule}
 import com.prism.dataplatform.twitter.entities.responses.{AddRulesResponse, RulesResponse, TweetCountResponse, TweetsResponse}
@@ -18,8 +18,8 @@ import org.http4s.headers.Authorization
 
 import scala.concurrent.ExecutionContext.global
 
-case class TwitterRestClient(config: TConfig) {
-  val httpClient: Resource[IO, Client[IO]] = BlazeClientBuilder[IO](global).resource
+case class TwitterRestClient(config: TwitterConfig) {
+  val httpClient: Resource[IO, Client[IO]] = BlazeClientBuilder[IO].withExecutionContext(global).resource
 
   def authenticate(): IO[AuthToken] = {
     implicit val tokenDecoder: EntityDecoder[IO, AuthToken] = circe.jsonOf[IO, AuthToken]

@@ -2,7 +2,7 @@ package com.prism.dataplatform.twitter.config
 
 import scala.beans.BeanProperty
 
-class TwitterConfig {
+class TwitterProperties {
   @BeanProperty var consumerKey: String = _
   @BeanProperty var consumerSecret: String = _
   @BeanProperty var bearerToken: String = _
@@ -10,8 +10,8 @@ class TwitterConfig {
   @BeanProperty var tokenSecret: String = _
 }
 
-case class TConfig(consumerKey: String,
-                   consumerSecret: String,
-                   bearerToken: String,
-                   token: String,
-                   tokenSecret: String)
+case class TwitterConfig(consumerKey: String,
+                         consumerSecret: String,
+                         bearerToken: String,
+                         token: String,
+                         tokenSecret: String)

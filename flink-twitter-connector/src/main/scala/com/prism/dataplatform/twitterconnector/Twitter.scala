@@ -3,7 +3,7 @@ package com.prism.dataplatform.twitterconnector
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 import com.prism.dataplatform.twitter.client.{TwitterRestClient, TwitterStreamingClient}
-import com.prism.dataplatform.twitter.config.TConfig
+import com.prism.dataplatform.twitter.config.TwitterConfig
 import com.prism.dataplatform.twitter.entities.responses.TweetResponse
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.flink.configuration.Configuration
@@ -13,7 +13,7 @@ import org.json4s._
 import org.json4s.native.JsonMethods._
 
 
-case class Twitter(config: TConfig) extends RichSourceFunction[TweetResponse]
+case class Twitter(config: TwitterConfig) extends RichSourceFunction[TweetResponse]
   with LazyLogging {
   @transient var twitterClient: TwitterRestClient = _
   @transient var streamingClient: TwitterStreamingClient[IO] = _
@@ -32,6 +32,7 @@ case class Twitter(config: TConfig) extends RichSourceFunction[TweetResponse]
       val token = twitterClient.authenticate.unsafeRunSync()
       val jsonTweets = streamingClient.streamTweets(token.access_token)
       jsonTweets.map(json => {
+        println(json)
         val tweet = parse(json).extract[TweetResponse]
         process(tweet)(ctx)
       }).compile.drain.unsafeRunSync
