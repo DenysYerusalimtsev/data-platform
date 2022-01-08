@@ -20,8 +20,8 @@ final case class User(
                      )
 
 final case class UserPublicMetrics(
-                                    followers_count: Int,
-                                    following_count: Int,
-                                    tweet_count: Int,
-                                    listed_count: Int
+                                    followers_count: Option[Int],
+                                    following_count: Option[Int],
+                                    tweet_count: Option[Int],
+                                    listed_count: Option[Int]
                                   )
