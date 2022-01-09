@@ -5,7 +5,7 @@ import com.prism.dataplatform.twitter.entities.responses.TweetResponse
 
 object SplitByMetrics {
   // TODO: Implement splitting by constant metric values.
-  def split(): Either3[TweetResponse, TweetResponse, TweetResponse] = {
-
-  }
+//  def split(): Either3[TweetResponse, TweetResponse, TweetResponse] = {
+//
+//  }
 }

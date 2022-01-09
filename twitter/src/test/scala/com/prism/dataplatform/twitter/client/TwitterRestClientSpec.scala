@@ -1,5 +1,6 @@
 package com.prism.dataplatform.twitter.client
 
+import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 import com.prism.dataplatform.twitter.config.{Config, TwitterConfig, TwitterProperties}
 import com.prism.dataplatform.core.config.YamlConfigProvider
@@ -9,7 +10,7 @@ import com.prism.dataplatform.twitter.entities.requests.{AddRules, DeleteRule}
 import com.prism.dataplatform.twitter.processor.RulesProcessor
 
 class TwitterRestClientSpec extends BaseTest {
-  behavior of classOf[TwitterRestClient].getSimpleName
+  behavior of classOf[TwitterRestClient[IO]].getSimpleName
 
   val rulesProcessor = new RulesProcessor {}
   val twitterConfig = new TwitterProperties()
@@ -24,7 +25,7 @@ class TwitterRestClientSpec extends BaseTest {
     config.twitter.token,
     config.twitter.tokenSecret
   )
-  val twitterClient = TwitterRestClient(tconfig)
+  val twitterClient = TwitterRestClient[IO](tconfig)
 
   it should "successfully authenticate in Twitter" in {
 

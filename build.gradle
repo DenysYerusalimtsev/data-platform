@@ -71,14 +71,14 @@ allprojects {
     apply plugin: 'java-library'
     apply plugin: 'application'
 
-    applicationDefaultJvmArgs = ['-Xss256m']
+//    applicationDefaultJvmArgs = ['-Xss1024m']
 
     tasks.withType(JavaCompile) {
-        options.compilerArgs += ['-Xss256m']
+//        options.compilerArgs += ['-Xss1024m']
     }
 
     tasks.withType(ScalaCompile) {
-        options.compilerArgs += ['-Xss256m']
+//        options.compilerArgs += ['-Xss1024m']
         scalaCompileOptions.additionalParameters = ["-Ypartial-unification"]
     }
 

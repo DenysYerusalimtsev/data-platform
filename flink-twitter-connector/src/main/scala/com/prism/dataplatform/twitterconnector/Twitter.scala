@@ -15,7 +15,7 @@ import org.json4s.native.JsonMethods._
 
 case class Twitter(config: TwitterConfig) extends RichSourceFunction[TweetResponse]
   with LazyLogging {
-  @transient var twitterClient: TwitterRestClient = _
+  @transient var twitterClient: TwitterRestClient[IO] = _
   @transient var streamingClient: TwitterStreamingClient[IO] = _
   @transient var running: Boolean = _
 
