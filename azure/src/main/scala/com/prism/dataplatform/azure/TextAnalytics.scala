@@ -1,11 +1,13 @@
 package com.prism.dataplatform.azure
 
-trait TextAnalytics[F[_]] {
+import scala.language.higherKinds
+
+trait TextAnalytics[F[_]] extends AutoCloseable {
   def detectedLanguage(document: String): F[String]
 
-  def analyzeSentiment(document: String): Unit
+  def analyzeSentiment(document: String): F[String]
 
   def analyzeSentimentWithOpinionMining(document: String, language: String): F[String]
 
-  def extractKeyPhrases(document: String): Unit
+  def extractKeyPhrases(document: String): F[Seq[String]]
 }

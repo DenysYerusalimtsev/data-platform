@@ -1,38 +1,42 @@
 package com.prism.dataplatform.azure
 
 import cats.effect.IO
-import com.azure.ai.textanalytics.{TextAnalyticsAsyncClient, TextAnalyticsClientBuilder}
 import com.azure.ai.textanalytics.models.AnalyzeSentimentOptions
+import com.azure.ai.textanalytics.{TextAnalyticsAsyncClient, TextAnalyticsClientBuilder}
 import com.azure.core.credential.AzureKeyCredential
 import com.prism.dataplatform.azure.AzureTextAnalytics.toIO
 import reactor.core.publisher.Mono
 
+import scala.collection.JavaConverters._
+
 class AzureTextAnalytics(key: String, endpoint: String) extends TextAnalytics[IO] {
-  val client: TextAnalyticsAsyncClient = new TextAnalyticsClientBuilder()
+  private val client: TextAnalyticsAsyncClient = new TextAnalyticsClientBuilder()
     .credential(new AzureKeyCredential(key))
     .endpoint(endpoint)
-    .buildAsyncClient();
+    .buildAsyncClient()
 
   override def detectedLanguage(document: String): IO[String] = {
     val detectedLanguage = toIO(client.detectLanguage(document))
     detectedLanguage.map(_.getName)
   }
 
-  override def analyzeSentiment(document: String): Unit = {
-    toIO(client.analyzeSentiment(document))
+  override def analyzeSentiment(document: String): IO[String] = {
+    toIO(client.analyzeSentiment(document)).map(_.getSentiment.toString)
   }
 
   override def analyzeSentimentWithOpinionMining(document: String, language: String): IO[String] = {
     val options = new AnalyzeSentimentOptions()
       .setIncludeStatistics(true)
       .setIncludeOpinionMining(true)
-    toIO(client.analyzeSentiment(document, language, options))
-    IO("")
+    toIO(client.analyzeSentiment(document, language, options)).map(_.toString)
   }
 
-  override def extractKeyPhrases(document: String): Unit = {
-    toIO(client.extractKeyPhrases(document))
+  override def extractKeyPhrases(document: String): IO[Seq[String]] = {
+    toIO(client.extractKeyPhrases(document)).map(s => s.stream())
+      .map(s => s.iterator().asScala.toSeq)
   }
+
+  override def close(): Unit = println("Stopping client")
 }
 
 object AzureTextAnalytics {
