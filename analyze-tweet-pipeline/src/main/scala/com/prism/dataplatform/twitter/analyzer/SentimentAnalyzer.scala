@@ -14,5 +14,11 @@ case class SentimentAnalyzer[F[_]](client: TextAnalytics[F]) extends AutoCloseab
       document, language)
   }
 
+  def extractKeyPhrases(tweet: TweetResponse): F[Seq[String]] = {
+    val document = tweet.data.flatMap(_.text).getOrElse("")
+
+    client.extractKeyPhrases(document)
+  }
+
   override def close(): Unit = client.close()
 }

@@ -1,23 +1,36 @@
 package com.prism.dataplatform.twitter.analyzer
 
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import com.prism.dataplatform.azure.TextAnalytics
 import com.prism.dataplatform.flink.AsyncFunction
 import com.prism.dataplatform.twitter.AnalyzedTweets
+import com.prism.dataplatform.twitter.entities.SentimentTweet
 import org.apache.flink.streaming.api.scala._
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object AnalyzeSentiment {
   def apply(client: () => TextAnalytics[IO], threads: Int): AnalyzedTweets = {
-    AsyncFunction.setup(ctx => {
+    AsyncFunction.setup(_ => {
       val textAnalyticsClient = client()
       SentimentAnalyzer[IO](textAnalyticsClient)
     })
       .parallelism(threads)
       .stop(analyzer => analyzer.close())
       .flatMap {
-        (analyzer, tweets) =>
-          analyzer.analyzeSentiment(tweets)
+        (analyzer, tweet) =>
+          val enrichment = for {
+            sentiment <- analyzer.analyzeSentiment(tweet)
+            keyWords <- analyzer.extractKeyPhrases(tweet)
+            sentimentTweet <- IO(SentimentTweet(
+              data = tweet.data.getOrElse(throw new Exception("Data is required field for tweet!")),
+              includes = tweet.includes,
+              sentiment = sentiment,
+              keyWords = keyWords))
+          } yield sentimentTweet
 
+          enrichment.unsafeToFuture().map(Seq(_))
       }
   }
 }

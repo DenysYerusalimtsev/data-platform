@@ -22,8 +22,6 @@ final case class Tweet(
                         withheld: Option[Withheld]
                       )
 
-final case class TweetTest(id: Option[String])
-
 final case class TweetAttachments(
                                    media_keys: Option[Array[String]],
                                    poll_ids: Option[Array[String]]

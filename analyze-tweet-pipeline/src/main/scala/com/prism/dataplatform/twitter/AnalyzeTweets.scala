@@ -1,6 +1,8 @@
 package com.prism.dataplatform.twitter
 
 import com.prism.dataplatform.flink.FlinkJob
+import com.prism.dataplatform.flink.syntax.toDataStreamOps
+import com.prism.dataplatform.twitter.analyzer.AnalyzeSentiment
 import com.prism.dataplatform.twitter.config.{Config, TwitterConfig}
 import com.prism.dataplatform.twitter.entities.responses.TweetResponse
 import com.prism.dataplatform.twitterconnector.Twitter
@@ -13,6 +15,7 @@ final class AnalyzeTweets extends FlinkJob[Config] {
     val tweets: DataStream[TweetResponse] = env.addSource(Twitter(buildTwitterConfig(config)))
       .name("Tweets")
 
+//    tweets.via(AnalyzeSentiment(config.azure))
 
     tweets.print()
   }
