@@ -20,7 +20,7 @@ final class AnalyzeTweets extends FlinkJob[Config] {
       client = new AzureTextAnalytics(
         key = config.azure.key,
         endpoint = config.azure.endpoint),
-      threads = 2))
+      threads = 3))
 
     tweets.print()
   }

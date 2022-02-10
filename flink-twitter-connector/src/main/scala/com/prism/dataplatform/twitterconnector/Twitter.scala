@@ -20,7 +20,7 @@ case class Twitter(config: TwitterConfig) extends RichSourceFunction[TweetRespon
   @transient var running: Boolean = _
 
   override def open(parameters: Configuration): Unit = {
-    twitterClient = TwitterRestClient(config)
+    twitterClient = TwitterRestClient(config.consumerKey, config.consumerSecret)
     streamingClient = new TwitterStreamingClient[IO](config)
     running = true
   }
