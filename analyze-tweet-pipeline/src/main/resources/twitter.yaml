@@ -3,3 +3,7 @@ twitter:
   consumerSecret: "trSdfKpVpqHCZF7pfBuJxXSK0ZeU5Qfz9QYWUxBjVFoM6uTuYS"
   token: "709107983599464448-Fe4a63I7eOBc4CTdHLlj8qYnff37QGJ"
   tokenSecret: "wYTQ4fmGt3lvJh6V8gYQMn3jGAHP2ycYnKIUrtt4gqb62"
+
+azure:
+  key: "084c7369342949bdb3f3935e5bc1950f"
+  endpoint: "https://prismanalyticscs.cognitiveservices.azure.com/"

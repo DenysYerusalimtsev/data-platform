@@ -1,9 +1,10 @@
 package com.prism.dataplatform.twitter
 
+import com.prism.dataplatform.azure.AzureTextAnalytics
 import com.prism.dataplatform.flink.FlinkJob
 import com.prism.dataplatform.flink.syntax.toDataStreamOps
 import com.prism.dataplatform.twitter.analyzer.AnalyzeSentiment
-import com.prism.dataplatform.twitter.config.{Config, TwitterConfig}
+import com.prism.dataplatform.twitter.config.TwitterConfig
 import com.prism.dataplatform.twitter.entities.responses.TweetResponse
 import com.prism.dataplatform.twitterconnector.Twitter
 import org.apache.flink.api.scala.createTypeInformation
@@ -15,7 +16,11 @@ final class AnalyzeTweets extends FlinkJob[Config] {
     val tweets: DataStream[TweetResponse] = env.addSource(Twitter(buildTwitterConfig(config)))
       .name("Tweets")
 
-//    tweets.via(AnalyzeSentiment(config.azure))
+    tweets.via(AnalyzeSentiment(
+      client = new AzureTextAnalytics(
+        key = config.azure.key,
+        endpoint = config.azure.endpoint),
+      threads = 2))
 
     tweets.print()
   }

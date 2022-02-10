@@ -6,8 +6,8 @@ class AzureTextAnalyticsSpec extends BaseTest {
   behavior of classOf[AzureTextAnalytics].getSimpleName
 
   val client = new AzureTextAnalytics(
-    key = "",
-    endpoint = ""
+    key = "084c7369342949bdb3f3935e5bc1950f",
+    endpoint = "https://prismanalyticscs.cognitiveservices.azure.com/"
   )
 
   it should "successfully analyze sentiment" in {
@@ -45,7 +45,7 @@ class AzureTextAnalyticsSpec extends BaseTest {
 
     testCase.map(resp => {
       assert(resp.nonEmpty)
-      assert(resp.contains("en"))
+      assert(resp.contains("English"))
     }).unsafeRunSync()
   }
 }

@@ -3,7 +3,6 @@ package com.prism.dataplatform.twitter.client
 import cats.effect.Async
 import cats.effect.kernel.Resource
 import com.prism.dataplatform.twitter.config.Constants._
-import com.prism.dataplatform.twitter.config.TwitterConfig
 import com.prism.dataplatform.twitter.entities.auth.AuthToken
 import com.prism.dataplatform.twitter.entities.requests.{AddRules, DeleteRule}
 import com.prism.dataplatform.twitter.entities.responses._
@@ -19,7 +18,8 @@ import org.http4s.headers.Authorization
 import scala.concurrent.ExecutionContext.global
 import scala.language.higherKinds
 
-case class TwitterRestClient[F[_]](config: TwitterConfig)(implicit F: Async[F]) {
+case class TwitterRestClient[F[_]](consumerKey: String,
+                                   consumerSecret: String)(implicit F: Async[F]) {
   val httpClient: Resource[F, Client[F]] = BlazeClientBuilder[F].withExecutionContext(global).resource
 
   def authenticate(): F[AuthToken] = {
@@ -27,7 +27,7 @@ case class TwitterRestClient[F[_]](config: TwitterConfig)(implicit F: Async[F]) 
 
     val uri: Uri = Uri.fromString(AUTH_API).getOrElse(new Uri())
       .withQueryParam("grant_type", "client_credentials")
-    val headers = Headers(Authorization(BasicCredentials(config.consumerKey, config.consumerSecret)))
+    val headers = Headers(Authorization(BasicCredentials(consumerKey, consumerSecret)))
     val request = Request[F](method = POST, uri = uri, headers = headers)
 
     httpClient.use(client => client.expect[AuthToken](request))

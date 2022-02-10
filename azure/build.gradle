@@ -5,6 +5,7 @@ dependencies {
     implementation(
             azure.core,
             azure.textanalytics,
-            cats.effect
+            cats.effect,
+            netty.nettyall
     )
 }

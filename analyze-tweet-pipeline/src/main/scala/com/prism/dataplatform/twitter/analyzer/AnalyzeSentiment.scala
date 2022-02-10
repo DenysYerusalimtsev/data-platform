@@ -11,10 +11,9 @@ import org.apache.flink.streaming.api.scala._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object AnalyzeSentiment {
-  def apply(client: () => TextAnalytics[IO], threads: Int): AnalyzedTweets = {
+  def apply(client: TextAnalytics[IO], threads: Int): AnalyzedTweets = {
     AsyncFunction.setup(_ => {
-      val textAnalyticsClient = client()
-      SentimentAnalyzer[IO](textAnalyticsClient)
+      SentimentAnalyzer[IO](client)
     })
       .parallelism(threads)
       .stop(analyzer => analyzer.close())
