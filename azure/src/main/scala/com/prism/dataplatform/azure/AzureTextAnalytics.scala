@@ -9,8 +9,8 @@ import reactor.core.publisher.Mono
 
 import scala.collection.JavaConverters._
 
-class AzureTextAnalytics(key: String, endpoint: String) extends TextAnalytics[IO] {
-  private val client: TextAnalyticsAsyncClient = new TextAnalyticsClientBuilder()
+case class AzureTextAnalytics(key: String, endpoint: String) extends TextAnalytics[IO] {
+  private lazy val client: TextAnalyticsAsyncClient = new TextAnalyticsClientBuilder()
     .credential(new AzureKeyCredential(key))
     .endpoint(endpoint)
     .buildAsyncClient()
@@ -28,7 +28,7 @@ class AzureTextAnalytics(key: String, endpoint: String) extends TextAnalytics[IO
     val options = new AnalyzeSentimentOptions()
       .setIncludeStatistics(true)
       .setIncludeOpinionMining(true)
-    toIO(client.analyzeSentiment(document, language, options)).map(_.toString)
+    toIO(client.analyzeSentiment(document, language, options)).map(s => s.getSentiment.toString)
   }
 
   override def extractKeyPhrases(document: String): IO[Seq[String]] = {

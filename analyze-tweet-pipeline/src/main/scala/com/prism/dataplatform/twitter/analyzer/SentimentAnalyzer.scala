@@ -11,7 +11,7 @@ case class SentimentAnalyzer[F[_]](client: TextAnalytics[F]) extends AutoCloseab
     val language = tweet.data.flatMap(_.lang).getOrElse("")
 
     client.analyzeSentimentWithOpinionMining(
-      document, language)
+      document, "en")
   }
 
   def extractKeyPhrases(tweet: TweetResponse): F[Seq[String]] = {

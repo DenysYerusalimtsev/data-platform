@@ -7,10 +7,10 @@ group 'com.prism.dataplatform'
 version '1.0.0'
 
 ext {
-    scalaVersion = '2.12.15'
+    scalaVersion = '2.12.12'
     scalaCompatVersion = '2.12'
     sparkVersion = '3.1.0'
-    flinkVersion = '1.13.5'
+    flinkVersion = '1.13.2'
     flinkCompatVersion = '1.13'
     http4sVersion = '1.0.0-M30'
     catsVersion = '2.7.0'
@@ -74,14 +74,11 @@ allprojects {
     apply plugin: 'java-library'
     apply plugin: 'application'
 
-//    applicationDefaultJvmArgs = ['-Xss1024m']
 
     tasks.withType(JavaCompile) {
-//        options.compilerArgs += ['-Xss1024m']
     }
 
     tasks.withType(ScalaCompile) {
-//        options.compilerArgs += ['-Xss1024m']
         scalaCompileOptions.additionalParameters = ["-Ypartial-unification"]
     }
 

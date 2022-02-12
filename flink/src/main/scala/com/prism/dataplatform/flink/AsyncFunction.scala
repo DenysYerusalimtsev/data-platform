@@ -16,17 +16,16 @@ case class AsyncFunctionBuilder[Ctx](
                                       private val _setup: Context => Ctx,
                                       private val _stop: Ctx => Unit,
                                       private val _options: AsyncFunction.Options = AsyncFunction.Options()) {
-  def stop(f: Ctx => Unit) = copy(_stop = f)
+  def stop(f: Ctx => Unit): AsyncFunctionBuilder[Ctx] = copy(_stop = f)
 
-  def atMost(duration: Duration) = copy(_options = _options.copy(timeout = duration))
+  def atMost(duration: Duration): AsyncFunctionBuilder[Ctx] = copy(_options = _options.copy(timeout = duration))
 
-  def parallelism(threads: Int) = copy(_options = _options.copy(parallelism = threads))
+  def parallelism(threads: Int): AsyncFunctionBuilder[Ctx] = copy(_options = _options.copy(parallelism = threads))
 
   def map[A, B: TypeInformation](f: (Ctx, A) => Future[B]): AsyncFunction[Ctx, A, B] =
     AsyncFunction(_setup, _stop, (ctx, next) => f(ctx, next).map(Iterable(_))(sameThread))
 
-  def flatMap[A, B: TypeInformation](
-                                      f: (Ctx, A) => Future[TraversableOnce[B]]): AsyncFunction[Ctx, A, B] =
+  def flatMap[A, B: TypeInformation](f: (Ctx, A) => Future[TraversableOnce[B]]): AsyncFunction[Ctx, A, B] =
     AsyncFunction(_setup, _stop, f)
 }
 
@@ -40,9 +39,9 @@ case class AsyncFunction[Ctx, A, B: TypeInformation](
                                                       private val _via: (Ctx, A) => Future[TraversableOnce[B]],
                                                       private val _options: AsyncFunction.Options)
   extends Function[DataStream[A], DataStream[B]] {
-  def atMost(duration: Duration) = copy(_options = _options.copy(timeout = duration))
+  def atMost(duration: Duration): AsyncFunction[Ctx, A, B] = copy(_options = _options.copy(timeout = duration))
 
-  def parallelism(threads: Int) = copy(_options = _options.copy(parallelism = threads))
+  def parallelism(threads: Int): AsyncFunction[Ctx, A, B] = copy(_options = _options.copy(parallelism = threads))
 
   def apply(stream: DataStream[A]): DataStream[B] = {
     val func: RichAsyncFunction[A, B] = new RichAsyncFunction[A, B] {
@@ -90,12 +89,11 @@ object AsyncFunction {
                                          _options: Options = Options()): AsyncFunction[Ctx, A, B] =
     new AsyncFunction(clean(_setup), clean(_stop), clean(_via), _options)
 
-  def setup[Ctx](f: Context => Ctx) = AsyncFunctionBuilder[Ctx](f, (_: Ctx) => ())
+  def setup[Ctx](f: Context => Ctx): AsyncFunctionBuilder[Ctx] = AsyncFunctionBuilder[Ctx](f, (_: Ctx) => ())
 
   def map[A, B: TypeInformation](f: A => Future[B]): AsyncFunction[Unit, A, B] =
     AsyncFunctionBuilder.stateless.map((_, next) => f(next))
 
-  def flatMap[A, B: TypeInformation](
-                                      f: A => Future[TraversableOnce[B]]): AsyncFunction[Unit, A, B] =
+  def flatMap[A, B: TypeInformation](f: A => Future[TraversableOnce[B]]): AsyncFunction[Unit, A, B] =
     AsyncFunctionBuilder.stateless.flatMap((_, next) => f(next))
 }

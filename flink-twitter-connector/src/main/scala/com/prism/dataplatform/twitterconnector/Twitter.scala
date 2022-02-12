@@ -32,7 +32,6 @@ case class Twitter(config: TwitterConfig) extends RichSourceFunction[TweetRespon
       val token = twitterClient.authenticate.unsafeRunSync()
       val jsonTweets = streamingClient.streamTweets(token.access_token)
       jsonTweets.map(json => {
-        println(json)
         val tweet = parse(json).extract[TweetResponse]
         process(tweet)(ctx)
       }).compile.drain.unsafeRunSync

@@ -6,4 +6,5 @@ import com.prism.dataplatform.twitter.entities.responses.TweetResponse
 
 package object twitter {
   type AnalyzedTweets = DataFlow[TweetResponse, SentimentTweet]
+//  type AnalyzedTweets = DataFlow[TweetResponse, Int]
 }
