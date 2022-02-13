@@ -4,5 +4,5 @@ case class SentimentTweet(
                            data: Tweet,
                            includes: Option[TweetIncludes],
                            sentiment: String,
-                           keyWords: Seq[String]
+                           keyWords: Array[String]
                          )

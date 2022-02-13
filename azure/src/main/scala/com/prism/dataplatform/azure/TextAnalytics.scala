@@ -9,5 +9,5 @@ trait TextAnalytics[F[_]] extends AutoCloseable {
 
   def analyzeSentimentWithOpinionMining(document: String, language: String): F[String]
 
-  def extractKeyPhrases(document: String): F[Seq[String]]
+  def extractKeyPhrases(document: String): F[Array[String]]
 }

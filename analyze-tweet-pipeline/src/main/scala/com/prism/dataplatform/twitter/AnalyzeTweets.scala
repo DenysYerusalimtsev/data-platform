@@ -46,6 +46,3 @@ final class AnalyzeTweets extends FlinkJob[Config] {
     )
   }
 }
-
-//TO DO: cache
-// Source -> flatMap monads

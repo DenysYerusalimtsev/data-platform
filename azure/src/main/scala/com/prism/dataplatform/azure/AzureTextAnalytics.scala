@@ -31,9 +31,8 @@ case class AzureTextAnalytics(key: String, endpoint: String) extends TextAnalyti
     toIO(client.analyzeSentiment(document, language, options)).map(s => s.getSentiment.toString)
   }
 
-  override def extractKeyPhrases(document: String): IO[Seq[String]] = {
-    toIO(client.extractKeyPhrases(document)).map(s => s.stream())
-      .map(s => s.iterator().asScala.toSeq)
+  override def extractKeyPhrases(document: String): IO[Array[String]] = {
+    toIO(client.extractKeyPhrases(document)).map(s => s.stream().iterator().asScala.toArray)
   }
 
   override def close(): Unit = println("Stopping client")

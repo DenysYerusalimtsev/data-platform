@@ -30,12 +30,11 @@ ext {
             kafka: "org.apache.spark:spark-sql-kafka-0-10_${scalaCompatVersion}:${sparkVersion}",
     ]
     flink = [
-            clients  : "org.apache.flink:flink-clients_${scalaCompatVersion}:${flinkVersion}",
-            streaming: "org.apache.flink:flink-streaming-scala_${scalaCompatVersion}:${flinkVersion}",
-            scala    : "org.apache.flink:flink-scala_${scalaCompatVersion}:${flinkVersion}",
-            twitter  : "org.apache.flink:flink-connector-twitter_${scalaCompatVersion}:${flinkVersion}",
-            avro     : "org.apache.flink:flink-avro:${flinkVersion}"
-
+            clients    : "org.apache.flink:flink-clients_${scalaCompatVersion}:${flinkVersion}",
+            streaming  : "org.apache.flink:flink-streaming-scala_${scalaCompatVersion}:${flinkVersion}",
+            scala      : "org.apache.flink:flink-scala_${scalaCompatVersion}:${flinkVersion}",
+            twitter    : "org.apache.flink:flink-connector-twitter_${scalaCompatVersion}:${flinkVersion}",
+            avro       : "org.apache.flink:flink-avro:${flinkVersion}",
     ]
     http = [
             client     : "org.http4s:http4s-client_${scalaCompatVersion}:${http4sVersion}",
@@ -99,9 +98,10 @@ allprojects {
                 "junit:junit:4.12",
                 "org.scalatestplus:scalatestplus-junit_${scalaCompatVersion}:1.0.0-M2",
                 "org.mockito:mockito-scala_${scalaCompatVersion}:1.16.25",
-                "com.holdenkarau:spark-testing-base_${scalaCompatVersion}:3.0.1_1.0.0",
-                "org.apache.flink:flink-test-utils_${scalaCompatVersion}:1.12.2",
-                "org.apache.flink:flink-runtime_2.11:1.12.2"
+//                "com.holdenkarau:spark-testing-base_${scalaCompatVersion}:3.0.1_1.0.0",
+                "org.apache.flink:flink-test-utils_${scalaCompatVersion}:${flinkVersion}",
+//                "org.apache.flink:flink-shaded-guava:30.1.1-jre-14.0",
+//                "org.apache.flink:flink-runtime_${scalaCompatVersion}:${flinkVersion}"
         )
 
         testImplementation("org.scalatest:scalatest_${scalaCompatVersion}:3.2.9") {
