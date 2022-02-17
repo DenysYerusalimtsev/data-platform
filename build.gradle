@@ -98,10 +98,8 @@ allprojects {
                 "junit:junit:4.12",
                 "org.scalatestplus:scalatestplus-junit_${scalaCompatVersion}:1.0.0-M2",
                 "org.mockito:mockito-scala_${scalaCompatVersion}:1.16.25",
-//                "com.holdenkarau:spark-testing-base_${scalaCompatVersion}:3.0.1_1.0.0",
+                "com.holdenkarau:spark-testing-base_${scalaCompatVersion}:3.0.1_1.0.0",
                 "org.apache.flink:flink-test-utils_${scalaCompatVersion}:${flinkVersion}",
-//                "org.apache.flink:flink-shaded-guava:30.1.1-jre-14.0",
-//                "org.apache.flink:flink-runtime_${scalaCompatVersion}:${flinkVersion}"
         )
 
         testImplementation("org.scalatest:scalatest_${scalaCompatVersion}:3.2.9") {
