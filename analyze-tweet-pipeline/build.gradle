@@ -8,6 +8,7 @@ dependencies {
             project(":twitter"),
             project(":flink-twitter-connector"),
             project(":azure"),
+            flink.web,
             flink.clients,
             flink.streaming,
             flink.scala,
