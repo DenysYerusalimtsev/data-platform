@@ -21,7 +21,7 @@ object AnalyzeSentiment {
             sentiment <- analyzer.analyzeSentiment(tweet)
             keyWords <- analyzer.extractKeyPhrases(tweet)
             sentimentTweet <- IO.pure(SentimentTweet(
-              data = tweet.data.getOrElse(throw new Exception("Data i s required field for tweet!")),
+              data = tweet.data.getOrElse(throw new Exception("Data is required field for tweet!")),
               includes = tweet.includes,
               sentiment = sentiment,
               keyWords = keyWords))

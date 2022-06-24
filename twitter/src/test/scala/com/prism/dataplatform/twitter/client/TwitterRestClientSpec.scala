@@ -53,7 +53,14 @@ class TwitterRestClientSpec extends BaseTest {
 
   it should "successfully creates and applies new rules" in {
 
-    val rules: AddRules = AddRules(Seq[Rule](rulesProcessor.addRules("spacex")))
+    val rules: AddRules = AddRules(Seq[Rule](
+      rulesProcessor.addRules("spacex"),
+      rulesProcessor.addRules("crypto"),
+      rulesProcessor.addRules("dogecoin"),
+      rulesProcessor.addRules("ukraine"),
+      rulesProcessor.addRules("metaverse"),
+      rulesProcessor.addRules("tesla")
+    ))
 
     val testCase = for {
       token <- twitterClient.authenticate
@@ -77,44 +84,44 @@ class TwitterRestClientSpec extends BaseTest {
     }).unsafeRunSync()
   }
 
-  it should "successfully delete applied rule from Twitter" in {
+//  it should "successfully delete applied rule from Twitter" in {
+//
+//    val rules: AddRules = AddRules(Seq[Rule](rulesProcessor.addRules("musk")))
+//    val destructor = RuleDestruction(ids = None, values = Array[String]("musk OR #musk"))
+//    val deleteRequest = DeleteRule(destructor)
+//    val testCase = for {
+//      token <- twitterClient.authenticate
+//      _ <- twitterClient.applyRules(rules, token.access_token)
+//      destruct <- twitterClient.deleteRules(deleteRequest, token.access_token)
+//    } yield destruct
+//
+//    testCase.map(resp => resp.meta.map(ruleMeta =>
+//      assert(ruleMeta.sent.nonEmpty))).unsafeRunSync()
+//  }
 
-    val rules: AddRules = AddRules(Seq[Rule](rulesProcessor.addRules("musk")))
-    val destructor = RuleDestruction(ids = None, values = Array[String]("musk OR #musk"))
-    val deleteRequest = DeleteRule(destructor)
-    val testCase = for {
-      token <- twitterClient.authenticate
-      _ <- twitterClient.applyRules(rules, token.access_token)
-      destruct <- twitterClient.deleteRules(deleteRequest, token.access_token)
-    } yield destruct
+//  it should "successfully get filtered stream from Twitter" in {
+//
+//    val rules: AddRules = AddRules(Seq[Rule](rulesProcessor.addRules("covid19")))
+//    val testCase = for {
+//      token <- twitterClient.authenticate
+//      _ <- twitterClient.applyRules(rules, token.access_token)
+//      tweets <- twitterClient.filteredStream(token.access_token)
+//    } yield tweets
+//
+//    testCase.map(resp => resp.data.map(data =>
+//      println(data))).unsafeRunSync()
+//  }
 
-    testCase.map(resp => resp.meta.map(ruleMeta =>
-      assert(ruleMeta.sent.nonEmpty))).unsafeRunSync()
-  }
-
-  it should "successfully get filtered stream from Twitter" in {
-
-    val rules: AddRules = AddRules(Seq[Rule](rulesProcessor.addRules("covid19")))
-    val testCase = for {
-      token <- twitterClient.authenticate
-      _ <- twitterClient.applyRules(rules, token.access_token)
-      tweets <- twitterClient.filteredStream(token.access_token)
-    } yield tweets
-
-    testCase.map(resp => resp.data.map(data =>
-      println(data))).unsafeRunSync()
-  }
-
-  it should "successfully get filtered string stream from Twitter" in {
-
-    val rules: AddRules = AddRules(Seq[Rule](rulesProcessor.addRules("covid19")))
-    val testCase = for {
-      token <- twitterClient.authenticate
-      _ <- twitterClient.applyRules(rules, token.access_token)
-      tweets <- twitterClient.filteredStringStream(token.access_token)
-    } yield tweets
-
-    testCase.map(resp => assert(resp.nonEmpty))
-      .unsafeRunSync()
-  }
+//  it should "successfully get filtered string stream from Twitter" in {
+//
+//    val rules: AddRules = AddRules(Seq[Rule](rulesProcessor.addRules("covid19")))
+//    val testCase = for {
+//      token <- twitterClient.authenticate
+//      _ <- twitterClient.applyRules(rules, token.access_token)
+//      tweets <- twitterClient.filteredStringStream(token.access_token)
+//    } yield tweets
+//
+//    testCase.map(resp => assert(resp.nonEmpty))
+//      .unsafeRunSync()
+//  }
 }
